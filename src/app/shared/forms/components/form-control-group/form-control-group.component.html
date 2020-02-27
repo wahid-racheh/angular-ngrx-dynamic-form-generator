@@ -1,0 +1,15 @@
+<ng-container *ngIf="field.childrens">
+  <ng-container *ngFor="let f of field.childrens">
+    <ng-container *ngIf="isGroup(f)">
+      <app-form-control-group [field]="f" [group]="group.get(f.key)"></app-form-control-group>
+    </ng-container>
+
+    <ng-container *ngIf="!isGroup(f)">
+      <app-form-control-field [field]="f" [group]="group"></app-form-control-field>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!isGroup(field)">
+  <app-form-control-field [field]="field" [group]="group"></app-form-control-field>
+</ng-container>

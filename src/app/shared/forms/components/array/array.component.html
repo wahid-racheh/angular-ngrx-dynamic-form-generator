@@ -1,0 +1,27 @@
+<ng-container [formGroup]="group">
+  <ng-container [formArrayName]="field?.key">
+    <ng-container *ngFor="let nestedGroup of groups; let i = index" [formGroup]="nestedGroup">
+      <ng-container *ngFor="let f of field.childrens">
+        <ng-container *ngIf="isGroup(f)">
+          <app-form-control-group
+            [field]="f"
+            [group]="nestedGroup.get(f.key)"
+          ></app-form-control-group>
+        </ng-container>
+        <ng-container *ngIf="!isGroup(f)">
+          <app-form-control-field [field]="f" [group]="nestedGroup"></app-form-control-field>
+        </ng-container>
+      </ng-container>
+      <!--
+      <div class="actions">
+        <button type="button" (click)="removeField(i); $event.stopPropagation()">
+          remove
+        </button>
+      <button type="button" (click)="addField(); $event.stopPropagation()">
+        add
+      </button>
+      </div>
+      -->
+    </ng-container>
+  </ng-container>
+</ng-container>

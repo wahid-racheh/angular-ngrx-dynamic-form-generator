@@ -1,0 +1,17 @@
+<ng-container>
+  <!-- Controls start-->
+  <ng-container *ngFor="let control of controls">
+    <ng-container *ngIf="isGroup(control)">
+      <app-form-control-group
+        [field]="control"
+        [group]="form.get(control.key)"
+      ></app-form-control-group>
+    </ng-container>
+    <ng-container *ngIf="!isGroup(control)">
+      <app-form-control-field [field]="control" [group]="form"></app-form-control-field>
+    </ng-container>
+  </ng-container>
+  <!-- Controls end-->
+
+  <ng-content></ng-content>
+</ng-container>

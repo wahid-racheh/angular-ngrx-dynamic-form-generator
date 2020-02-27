@@ -1,0 +1,12 @@
+.actions--nested-item {
+  position: relative;
+  left: 99%;
+  top: -7rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 5rem;
+}
+
+.box--nested-item {
+  padding: 1rem 3rem;
+}

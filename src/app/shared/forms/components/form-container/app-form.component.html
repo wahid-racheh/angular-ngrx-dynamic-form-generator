@@ -1,0 +1,11 @@
+<!-- Form start-->
+<form
+  *ngIf="form"
+  class="form-container"
+  [formGroup]="form"
+  autocomplete="off"
+  (submit)="handleOnSubmit(form.value)"
+>
+  <ng-content></ng-content>
+</form>
+<!-- Form end-->
