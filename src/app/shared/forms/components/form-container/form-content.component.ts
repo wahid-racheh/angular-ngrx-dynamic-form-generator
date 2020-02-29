@@ -38,7 +38,6 @@ export class FormComponent implements OnDestroy {
   public controls: NgxAbstractFormControl[];
 
   get isValid(): boolean {
-    normalizeFormControlValues(this.form);
     if (!this.form.valid) {
       validateAllFormFields(this.form);
       return false;

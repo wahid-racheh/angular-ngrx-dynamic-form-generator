@@ -22,8 +22,9 @@
       <mat-progress-spinner
         *ngIf="showSpinner"
         [color]="spinnerColor"
-        mode="indeterminate"
+        [mode]="'indeterminate'"
         [diameter]="spinnerSize"
+        [value]="spinnerSize"
       >
       </mat-progress-spinner>
       <mat-placeholder class="d-md-none d-block">{{ placeholder }}</mat-placeholder>

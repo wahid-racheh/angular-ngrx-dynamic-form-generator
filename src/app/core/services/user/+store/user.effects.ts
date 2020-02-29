@@ -45,7 +45,7 @@ export class UserEffects {
 
         return this.userService.search().pipe(
           takeUntil(nextSearch$),
-          map((data: User[]) => data.filter(u => u.name.toLowerCase().indexOf(name) > -1)),
+          map((data: User[]) => data.filter(u => u.name.toLowerCase().indexOf(name.toLowerCase()) > -1)),
           map((users: User[]) => UserActions.searchSuccess({ response: users })),
           catchError((error: any) => of(UserActions.searchFail({ error })))
         );

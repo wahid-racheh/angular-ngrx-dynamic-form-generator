@@ -77,7 +77,7 @@ export class AutoCompleteWrapperComponent {
       [debounceTime]="field?.extraOptions?.debounceTime"
       [minLength]="field?.extraOptions?.minLength"
       [spinnerColor]="field?.extraOptions?.spinnerColor"
-      [spinnerSize]="field?.extraOptions?.spinnerSize"
+      [spinnerSize]="field?.extraOptions?.spinnerSize || 20"
     ></app-auto-complete>
   `,
   styleUrls: ['./auto-complete.component.scss']
@@ -125,8 +125,8 @@ export class AutoCompleteComponent extends BaseInput implements OnInit {
     this.debounceTime = 300;
     this.minLength = 2;
     this.spinnerColor = 'primary';
-    this.spinnerSize = 20;
     this.showSpinner = false;
+    this.spinnerSize = 20;
   }
 
   @Input('data') public items: any;

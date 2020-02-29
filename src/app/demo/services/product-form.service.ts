@@ -84,8 +84,7 @@ export class ProductFormService {
                 label: 'First Name',
                 placeholder: 'First Name',
                 defaultValue: SizeEnum.MEDIUM
-              },
-              validators: [Validators.required]
+              }
             },
             {
               key: 'types',
@@ -104,8 +103,7 @@ export class ProductFormService {
                 data: this.availableTypes,
                 optionKey: 'key',
                 optionValue: 'value'
-              },
-              validators: [Validators.required]
+              }
             }
           ]
         },
@@ -139,8 +137,7 @@ export class ProductFormService {
                 debounceTime: 300,
                 minLength: 2,
                 asyncQuery: true
-              },
-              validators: [Validators.required]
+              }
             },
             {
               key: 'customTemplate1',
@@ -213,8 +210,7 @@ export class ProductFormService {
                 defaultValue: this.defaultDate,
                 minDate: this.minDate,
                 maxDate: this.maxDate
-              },
-              validators: [Validators.required]
+              }
             },
             {
               key: 'phoneNumber',
@@ -228,7 +224,7 @@ export class ProductFormService {
                 Validators.compose([
                   Validators.required,
                   Validators.minLength(8),
-                  Validators.maxLength(12)
+                  Validators.maxLength(20)
                 ])
               ]
             },

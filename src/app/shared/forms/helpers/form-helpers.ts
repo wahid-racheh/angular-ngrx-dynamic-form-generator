@@ -10,6 +10,7 @@ export const validateAllFormFields = (fg): void => {
     const c = fg.get(field);
     if (c instanceof FormControl) {
       c.markAsTouched({ onlySelf: true });
+      c.updateValueAndValidity();
     } else if (c instanceof FormGroup || c instanceof FormArray) {
       validateAllFormFields(c);
     }
@@ -68,31 +69,33 @@ export const createGroup = (controls: NgxAbstractFormControl[], group: FormGroup
   controls.forEach((control: any) => {
     if (!isCustomTemplate(control)) {
       if (isArrayControl(control) || isCheckboxGroupControl(control)) {
-        group.addControl(control.key, createArray(control.childrens, new FormArray([])));
+        group.addControl(control.key, createArray(control, new FormArray([])));
       } else if (isGroupControl(control)) {
         group.addControl(control.key, createGroup(control.childrens, new FormGroup({})));
+        if (control.validators && !!control.validators.length) {
+          group.setValidators(control.validators);
+        }
       } else {
         group.addControl(control.key, createField(control));
-      } 
-      // TODO add aray and group validations
-      // if (control.validators && !!control.validators.length) {
-      //   group.setValidators(control.validators);
-      // }
+      }
     }    
   });
   return group;
 };
 
 // Return a FormArray with nested groups and fields
-export const createArray = (controls: NgxAbstractFormControl[], array: FormArray): FormArray => {
-  if (controls && !!controls.length) {
+export const createArray = (control: NgxAbstractFormControl, array: FormArray): FormArray => {
+  if (control.hasOwnProperty('childrens') && !!control['childrens'].length) {
     // Add index control to identify group index in the array
     const group = createGroup(
-      controls,
+      control['childrens'],
       new FormGroup({
         index: new FormControl(0)
       })
     );
+    if (control.validators && !!control.validators.length) {
+      group.setValidators(control.validators);
+    }
     array.push(group);
   }
   return array;
@@ -121,10 +124,13 @@ export const addFormArray = (formArray: FormArray, field: any): void => {
   if (field.childrens) {
     // Add index input to identify group index in the array
     const indexControl = new FormControl(formArray.value.length);
-    const group: FormGroup = new FormGroup({
+    const group: FormGroup = createGroup(field.childrens, new FormGroup({
       index: indexControl
-    });
-    formArray.push(createGroup(field.childrens, group));
+    }));
+    if (field.validators && !!field.validators.length) {
+      group.setValidators(field.validators);
+    }
+    formArray.push(group);
     if (formArray.parent) {
       formArray.parent.markAsDirty();
     } else {

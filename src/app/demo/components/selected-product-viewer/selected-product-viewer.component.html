@@ -4,7 +4,7 @@
 >
   <div class="row" *ngIf="selectedProductGroup" [formGroup]="selectedProductGroup">
     <div class="col-md-12" *ngIf="selectedProductGroup.errors?.productTypeSize">
-      <div class="ValidationErrorLabel mg-bottom-15">
+      <div class="ValidationErrorLabel text-danger mg-bottom-15">
         {{ selectedProductGroup.errors?.productTypeSize?.message }}
       </div>
     </div>

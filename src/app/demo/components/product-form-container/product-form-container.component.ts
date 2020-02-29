@@ -2,22 +2,22 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, EventEmitter } f
 import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 
-import { DEMO_PRODUCT } from '@app/demo/constants/demo-product-item';
 import { IProductFormInterface } from '@app/demo/interfaces/product-form.interface';
 import { ProductFormValidatorsService } from '@app/demo/services/product-form-validators.service';
 import { ProductFormService } from '@app/demo/services/product-form.service';
-import { ProductLoaderService } from '@app/demo/services/product-loader.service';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
 import { unsubscribe } from '@app/core/utils/utils';
 import { addFormArray, removeFormArrayAt, getCheckboxStaticGroup } from '@app/shared/forms/helpers/form-helpers';
 import { takeUntil } from 'rxjs/operators';
+import { UserFacade } from '@app/core/services/user/+store/user.facade';
+import { User } from '@app/core/services/user/models/user.interface';
 
 @Component({
   selector: 'app-product-form-container',
   templateUrl: './product-form-container.component.html',
   styleUrls: ['./product-form-container.component.scss'],
-  providers: [ProductFormService, ProductFormValidatorsService, ProductLoaderService],
+  providers: [ProductFormService, ProductFormValidatorsService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductFormContainerComponent implements OnInit, OnDestroy {
@@ -30,8 +30,6 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public formConfig: NgxFormConfig;
   
-  public editMode = false;
-  
   private initialData:any;
 
   public get controls(): any {
@@ -40,6 +38,10 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   get productsArray(): FormArray {
     return this.form.get(this.controls.products.key) as FormArray;
+  }
+
+  get customerDetailsGroup(): FormGroup {
+    return this.form.get(this.controls.customerDetails.key) as FormGroup;
   }
   
   get selectedProductGroup(): AbstractControl {
@@ -60,43 +62,74 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
     return onAddProduct;
   }
 
+  private get onCustomerSearch(): EventEmitter<any> {
+    const {
+      customer: {
+        templateOptions: {
+          events: { onSearch }
+        }
+      }
+    } = this.controls;
+    return onSearch;
+  }
+
+  private get onSelectCustomer(): EventEmitter<any> {
+    const {
+      customer: {
+        templateOptions: {
+          events: { onSelectItem }
+        }
+      }
+    } = this.controls;
+    return onSelectItem;
+  }
+
   constructor(
-    private productLoaderService: ProductLoaderService,
     private productFormService: ProductFormService,
-    private formsFacade: FormsFacade
+    private formsFacade: FormsFacade,
+    private userFacade: UserFacade
   ) {
     this.formConfig = this.productFormService.formConfig;
     this.initialData = {
-      products: [],
       customerDetails:{
-         address:{
-            street: '',
-            suite: '',
-            city: '',
-            zipcode: ''
-         },
-         customer: '',
-         firstName: '',
-         lastName: '',
          gender: 'M',
-         dob: '1990-02-27T20:13:05.010Z',
-         phoneNumber: ''
-      },
-      selectedProduct: ''
+      }
    };
 
    this.onAddProduct
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => this.onProductAdd());
+      .subscribe(() => this.handleAddProduct());
+
+    this.onCustomerSearch
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(term => this.handleSearchCustomer(term));
+
+    this.onSelectCustomer
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(customer => this.handleSelectCustomer(customer));
+
+    this.userFacade.user$.pipe(takeUntil(this.unsubscribe$)).subscribe((customer: any) => {
+        if (customer) {
+          this.customerDetailsGroup.patchValue(
+            {
+              firstName: customer.username,
+              lastName: customer.name,
+              phoneNumber: customer.phone,
+              address: {
+                street: customer.address.street,
+                suite: customer.address.suite,
+                city: customer.address.city,
+                zipcode: customer.address.zipcode
+              }
+            },
+            { emitEvent: false }
+          );
+        }
+      });
   }
   
   public ngOnInit() {
     this.formsFacade.setFormConfig(this.formConfig);
-    // here you can check the page url if a product order id was specified
-    // and load it from the server
-    if (this.editMode) {
-      this.productLoaderService.loadProductForEdit(DEMO_PRODUCT);
-    }
   }
 
   public ngOnDestroy() {
@@ -115,7 +148,7 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   public handleReset() {
     while (this.productsArray.length) {
-      this.productsArray.removeAt(0);
+      this.onProductDelete(0)
     }
     this.form.reset();
     this.formsFacade.setData(this.initialData);
@@ -123,20 +156,14 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   public async handleSubmit({ valid, value }) {
     if (!valid) {
-      alert(`Please fill the form by the right data`);
+      this.onProductDelete(0);
       return;
     }
     const data: IProductFormInterface = { ...value };
     this.formsFacade.updateData(data);
     const order: IProductFormInterface = this.productFormService.createProductOrder(data);
-
+    console.log("order : ", order)
     alert(`Thanks ${order.customerDetails.firstName}, the product is on the way!`);
-
-    if (this.editMode) {
-      // update api endpoint call
-    } else {
-      // create api endpoint call
-    }
   }
 
   public selectProductForEdit(index: number) {
@@ -145,7 +172,15 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onProductAdd() {
+  public handleSearchCustomer(searchTerm: string) {
+    this.userFacade.search(searchTerm);
+  }
+
+  public handleSelectCustomer(customer: User) {
+    this.userFacade.getUser(customer.id.toString());
+  }
+
+  public handleAddProduct() {
     addFormArray(this.productsArray, this.controls.products); 
     this.initProductTypes();   
   }

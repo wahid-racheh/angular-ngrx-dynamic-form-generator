@@ -4,6 +4,10 @@
   background: #f1f1f1;
   padding: 15px;
 
+  & .ValidationErrorLabel {
+    padding: 1rem;
+  }
+
   &.productSelectorView--empty {
     display: flex;
     align-items: center;

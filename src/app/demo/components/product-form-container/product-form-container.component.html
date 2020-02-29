@@ -1,3 +1,4 @@
+<!-- Form Container -->
 <app-form [form]="form" 
       (onSubmit)="handleSubmit($event)"
       [formConfig$]="formConfig$"
@@ -7,7 +8,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <div *ngIf="form && form.errors?.noProducts && form.dirty" class="ValidationErrorLabel mg-bottom-15">
+      <div *ngIf="form && form.errors?.noProducts && form.dirty" class="ValidationErrorLabel text-danger mg-bottom-15">
         {{ form.errors?.noProducts.message }}
       </div>
     </div>
@@ -16,25 +17,35 @@
     <div class="col-md-8">
       <div class="row">
         <div class="col-md-12">
+
+          <!-- Render product viewer component in a custom template -->
           <app-form-content
             [form]="form" 
             [controls]="[controls.productViewer]"
           >
           </app-form-content>
+          <!-- / Render product viewer component in a custom template -->
+
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-12">
+
+          <!-- Render dynamic customer details fields -->
           <app-form-content
             [form]="form" 
             [controls]="[controls.customerDetails]"
           >
           </app-form-content>
+          <!-- / Render dynamic customer details fields -->
+
         </div>
       </div>
       <div class="row">
         <div class="col-md-12 mt-2 clearfix d-flex">
+
+          <!-- Form button actions -->
           <button
               mat-raised-button
               class="mr-auto"
@@ -51,20 +62,26 @@
               type="submit"
             >{{'GLOBAL.SAVE' | translate}}
           </button>
+          <!-- / Form button actions -->
 
         </div>
       </div>
     </div>
     <div class="col-md-4">
+
+      <!-- Product list component -->
       <app-product-list
       *ngIf="form"
         [group]="form"
         (productSelected)="onProductSelected($event)"
-        (addProduct)="onProductAdd()"
+        (addProduct)="handleAddProduct()"
         (deleteProduct)="onProductDelete($event)"
       >
       </app-product-list>
+      <!-- / Product list component -->
+
     </div>
   </div>
 
 </app-form>
+<!-- / Form Container -->
