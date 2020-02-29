@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import moment from 'moment';
 
 import { BaseInput } from '@app/shared/forms/classes/base-input.class';
-import { FormFieldControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-date-picker-wrapper',
@@ -26,7 +26,7 @@ import { FormFieldControl } from '@app/shared/forms/interfaces/types';
 })
 export class DatePickerWrapperComponent {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
   @Output()

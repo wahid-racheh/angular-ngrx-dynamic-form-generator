@@ -13,7 +13,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { BaseInput } from '@app/shared/forms/classes/base-input.class';
-import { FormFieldControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-auto-complete-wrapper',
@@ -43,7 +43,7 @@ import { FormFieldControl } from '@app/shared/forms/interfaces/types';
 })
 export class AutoCompleteWrapperComponent {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
 
@@ -84,7 +84,7 @@ export class AutoCompleteWrapperComponent {
 })
 export class AutoCompleteAsyncWrapperComponent implements OnInit {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
 

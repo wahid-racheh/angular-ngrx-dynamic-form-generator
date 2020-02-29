@@ -5,8 +5,7 @@ import { FormGroup } from '@angular/forms';
 import * as FormsActions from '@app/shared/forms/+store/forms.actions';
 import { FormsState } from '@app/shared/forms/+store/forms.reducer';
 import { formQuery } from '@app/shared/forms/+store/forms.selectors';
-import { FormControlsConfig } from '@app/shared/forms/classes/form-config.class';
-import { PageTypeDef } from '@app/shared/forms/interfaces/types';
+import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +17,11 @@ export class FormsFacade {
   public errors$ = this.store.select(formQuery.getErrors);
   public touched$ = this.store.select(formQuery.getTouchedForm);
   public resetFlag$ = this.store.select(formQuery.getResetFlag);
-  public currentPage$ = this.store.select(formQuery.getCurrentPage);
 
   constructor(private store: Store<FormsState>) {}
 
-  public setFormConfig(formConfig: FormControlsConfig) {
+  public setFormConfig(formConfig: NgxFormConfig) {
     this.store.dispatch(FormsActions.setFormConfig({ formConfig }));
-  }
-
-  public setCurrentPage(currentPage: PageTypeDef) {
-    this.store.dispatch(FormsActions.setCurrentPage({ currentPage }));
   }
 
   public setData(data: any) {

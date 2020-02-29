@@ -6,7 +6,7 @@ import { timer } from 'rxjs';
 
 import { TextInputComponent } from '@app/shared/forms/components/text-input/text-input.component';
 import { DynamicFieldDirective } from '@app/shared/forms/directives/dynamic-field/dynamic-field.directive';
-import { FieldType, FormControlType } from '@app/shared/forms/interfaces/types';
+import { NgxFormControlType, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
 
@@ -17,7 +17,7 @@ import { AppMockModules } from '@tests/mocks/app-mock-modules';
   `
 })
 export class TestDirectiveComponent implements OnInit {
-  @Input() public field: FormControlType;
+  @Input() public field: NgxAbstractFormControl;
   @Input() public group: FormGroup;
 
   public setControl: EventEmitter<any> = new EventEmitter();
@@ -63,7 +63,7 @@ describe('DynamicFieldDirective', () => {
     });
     component.field = {
       key: 'email',
-      type: FieldType.TEXT,
+      type: NgxFormControlType.TEXT,
       level: 1,
       templateOptions: {
         displayOrder: 0,

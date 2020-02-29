@@ -1,13 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
-import { PageTypeDef } from '@app/shared/forms/interfaces/types';
-
 export const setData = createAction('[forms] SET_DATA', props<{ data: any }>());
 export const setForm = createAction('[forms] SET_FORM', props<{ form: any }>());
-export const setCurrentPage = createAction(
-  '[forms] Set Current Page',
-  props<{ currentPage: PageTypeDef }>()
-);
 
 export const updateData = createAction('[forms] UPDATE_DATA', props<{ data: any }>());
 

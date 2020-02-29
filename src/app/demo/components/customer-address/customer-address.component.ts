@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FormGroupControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormGroup } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-customer-address',
@@ -10,7 +10,7 @@ import { FormGroupControl } from '@app/shared/forms/interfaces/types';
 })
 export class CustomerAddressComponent {
   @Input()
-  public field: FormGroupControl;
+  public field: NgxFormGroup;
   @Input()
   public group: FormGroup;
 }

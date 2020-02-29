@@ -6,7 +6,7 @@ import {
   getCheckboxStaticGroup,
   handleInputValueChangesEvent
 } from '@app/shared/forms/helpers/form-helpers';
-import { FormFieldControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 import { isEmpty } from '@app/shared/forms/utils/form-utils';
 
 @Component({
@@ -33,7 +33,7 @@ import { isEmpty } from '@app/shared/forms/utils/form-utils';
 })
 export class CheckboxGroupWrapperComponent {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
   @Output()

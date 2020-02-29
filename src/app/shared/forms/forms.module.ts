@@ -60,6 +60,8 @@ import {
 import { AutocompleteDirective } from '@app/shared/forms/directives/autocomplete/autocomplete.directive';
 import { DynamicFieldDirective } from '@app/shared/forms/directives/dynamic-field/dynamic-field.directive';
 import { FormValidatorsService } from '@app/shared/forms/services/form-validators.service';
+import { CustomTemplateComponent } from './components/custom-template/custom-template.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 const componentsList = [
   DynamicFieldDirective,
@@ -69,6 +71,7 @@ const componentsList = [
   FormContentComponent,
   FormControlGroupComponent,
   FormControlFieldComponent,
+  CustomTemplateComponent,
   SizePickerComponent,
   NumberComponent,
   NumberWrapperComponent,
@@ -91,6 +94,7 @@ const componentsList = [
 ];
 
 const entryComponents = [
+  CustomTemplateComponent,
   NumberWrapperComponent,
   TextInputWrapperComponent,
   TextAreaWrapperComponent,
@@ -112,6 +116,7 @@ const entryComponents = [
     TranslateModule,
     MaterialModule,
     DirectivesModule,
+    PipesModule,
     StoreModule.forFeature(formsStoreName, formsReducer, {
       initialState: formsInitialState
     }),

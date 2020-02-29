@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { BaseInput } from '@app/shared/forms/classes/base-input.class';
 import { handleInputValueChangesEvent } from '@app/shared/forms/helpers/form-helpers';
-import { FormFieldControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 import { isEmpty } from '@app/shared/forms/utils/form-utils';
 
 @Component({
@@ -31,7 +31,7 @@ import { isEmpty } from '@app/shared/forms/utils/form-utils';
 })
 export class RadioWrapperComponent {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
   @Output()

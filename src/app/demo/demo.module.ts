@@ -14,7 +14,7 @@ import { DemoResolverService } from '@app/demo/resolvers/demo-resolver.service';
 import { SharedModule } from '@app/shared/shared.module';
 import { CustomerAddressComponent } from './components/customer-address/customer-address.component';
 
-const entryComponents: any[] = [CustomerAddressComponent];
+const entryComponents: any[] = [CustomerAddressComponent, SelectedProductViewerComponent];
 
 @NgModule({
   declarations: [

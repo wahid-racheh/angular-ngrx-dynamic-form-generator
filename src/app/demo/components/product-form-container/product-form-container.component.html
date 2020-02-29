@@ -16,11 +16,11 @@
     <div class="col-md-8">
       <div class="row">
         <div class="col-md-12">
-          <app-selected-product-viewer
-            (addProduct)="onProductAdd()"
-            [selectedProductGroup]="selectedProductGroup"
+          <app-form-content
+            [form]="form" 
+            [controls]="[controls.productViewer]"
           >
-          </app-selected-product-viewer>
+          </app-form-content>
         </div>
       </div>
 
@@ -28,9 +28,9 @@
         <div class="col-md-12">
           <app-form-content
             [form]="form" 
-            [controls]="[formConfig.controlsMap.customerDetails]"
+            [controls]="[controls.customerDetails]"
           >
-        </app-form-content>
+          </app-form-content>
         </div>
       </div>
       <div class="row">

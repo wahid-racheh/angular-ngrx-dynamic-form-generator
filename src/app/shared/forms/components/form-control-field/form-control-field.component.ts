@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { isCustomTemplate } from '../../helpers/form-helpers';
+import { AbstractControl } from '@angular/forms';
+import { NgxFormControl } from '../../interfaces/types';
 
 @Component({
   selector: 'app-form-control-field',
@@ -6,6 +9,10 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./form-control-field.component.scss']
 })
 export class FormControlFieldComponent {
-  @Input() public field: any;
-  @Input() public group: any;
+  @Input() public field: NgxFormControl;
+  @Input() public group: AbstractControl;
+
+  public get isCustomTemplate() {
+    return isCustomTemplate(this.field);
+  }
 }

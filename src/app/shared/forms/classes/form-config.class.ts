@@ -1,14 +1,19 @@
 import { sortBy } from 'lodash';
 
-import { FormConfig, FormControlType } from '@app/shared/forms/interfaces/types';
+import { NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 
-export class FormControlsConfig {
-  public controlsMap: { [key: string]: FormControlType };
-  public controls: FormControlType[];
+export interface INgxFormConfig {
+  controlsMap?: { [key: string]: NgxAbstractFormControl };
+  controls: NgxAbstractFormControl[];
+}
 
-  constructor(init?: FormConfig) {
-    this.controlsMap = this.flatData(init.controls);
+export class NgxFormConfig {
+  public controlsMap: { [key: string]: NgxAbstractFormControl };
+  public controls: NgxAbstractFormControl[];
+
+  constructor(init?: INgxFormConfig) {
     this.controls = this.sortControls(init.controls);
+    this.controlsMap = this.flatData(this.controls);
   }
 
   public sortData(data) {

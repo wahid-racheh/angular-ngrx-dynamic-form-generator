@@ -2,16 +2,10 @@ import { Type, TypeProvider } from '@angular/core';
 import moment from 'moment';
 import { Observable } from 'rxjs';
 
-export enum PageType {
-  CREATE_PAGE = 'CREATE_PAGE',
-  UPDATE_PAGE = 'UPDATE_PAGE',
-  PREVIEW_PAGE = 'PREVIEW_PAGE'
-}
-export type PageTypeDef = PageType.CREATE_PAGE | PageType.UPDATE_PAGE | PageType.PREVIEW_PAGE;
-
-export enum FieldType {
+export enum NgxFormControlType {
   ARRAY = 'ARRAY',
   GROUP = 'GROUP',
+  CUSTOM_TEMPLATE = 'CUSTOM_TEMPLATE',
 
   TEXT = 'TEXT',
   TEXTAREA = 'TEXTAREA',
@@ -24,18 +18,18 @@ export enum FieldType {
   SELECT = 'SELECT'
 }
 
-export type _FieldType =
-  | FieldType.TEXT
-  | FieldType.TEXTAREA
-  | FieldType.AUTOCOMPLETE
-  | FieldType.ASYNC_AUTOCOMPLETE
-  | FieldType.CHECKBOX_GROUP
-  | FieldType.RADIO
-  | FieldType.NUMBER
-  | FieldType.DATE_PICKER
-  | FieldType.SELECT;
+export type _NgxFormControlType =
+  | NgxFormControlType.TEXT
+  | NgxFormControlType.TEXTAREA
+  | NgxFormControlType.AUTOCOMPLETE
+  | NgxFormControlType.ASYNC_AUTOCOMPLETE
+  | NgxFormControlType.CHECKBOX_GROUP
+  | NgxFormControlType.RADIO
+  | NgxFormControlType.NUMBER
+  | NgxFormControlType.DATE_PICKER
+  | NgxFormControlType.SELECT;
 
-export interface TemplateOptions {
+export interface NgxTemplateOptions {
   displayOrder?: number;
   disabled?: boolean;
   label?: string;
@@ -51,17 +45,16 @@ export interface TemplateOptions {
   defaultValue?: any;
 }
 
-export interface AutoCompleteAsyncData {
+export interface NgxAutoCompleteAsyncData {
   provider: TypeProvider;
   dataSelectorName: string;
   loadingSelectorName: string;
 }
 
-export interface ExtraOptions {
+export interface NgxExtraOptions {
   // common properties
   data?: any;
   attributes?: any;
-  preview?: boolean;
 
   // Date picker properties
   defaultValue?: moment.Moment;
@@ -76,7 +69,7 @@ export interface ExtraOptions {
   spinnerColor?: string;
   asyncQuery?: boolean;
   showSpinner?: Observable<boolean> | boolean;
-  asyncData?: AutoCompleteAsyncData;
+  asyncData?: NgxAutoCompleteAsyncData;
 
   // Radio, Checkbox, select properties
   displayInline?: boolean;
@@ -86,38 +79,63 @@ export interface ExtraOptions {
   optionValue?: string;
 }
 
-export interface BaseFormControl {
+export interface NgxBaseFormControl {
   key: string; // control name
   level?: number; // controls tree level
   isDynamic?: boolean; // using dynamic render if true, by default false
   className?: string; // control class name
-  extraOptions?: ExtraOptions; // control extended options,
+  extraOptions?: NgxExtraOptions; // control extended options,
   validators?: any[]; // control validators
+}
+
+export interface NgxAbstractCustomFormControl extends NgxBaseFormControl {
+  type: NgxFormControlType.CUSTOM_TEMPLATE; // control type
+  templateOptions: NgxTemplateOptions; // control template options
+}
+
+export interface NgxCustomFormComponent extends NgxAbstractCustomFormControl {
+  // reference for an angular component
+  // IMPORTANT!! component should be injected in entryComponent array of the module
+  componentRef: Type<any>;
+}
+
+export interface NgxCustomFormTemplate extends NgxAbstractCustomFormControl {
+  htmlTemplate: string;
+}
+
+
+export interface NgxFormControl extends NgxBaseFormControl {
+  type: _NgxFormControlType; // control type
+  templateOptions: NgxTemplateOptions; // control template options
 
   // reference for an angular component
-  // IMPORTANT!! Assigned component should be injected in entryComponent of the module
+  // IMPORTANT!! component should be injected in entryComponent array of the module
   componentRef?: Type<any>;
 }
 
-export interface FormFieldControl extends BaseFormControl {
-  type: _FieldType; // control type
-  templateOptions: TemplateOptions; // control template options
+export interface NgxFormGroup extends NgxBaseFormControl {
+  type: NgxFormControlType.GROUP; // control type
+  templateOptions?: NgxTemplateOptions; // control template options
+  childrens: NgxAbstractFormControl[];
+
+  // reference for an angular component
+  // IMPORTANT!! component should be injected in entryComponent array of the module
+  componentRef?: Type<any>;
 }
 
-export interface FormGroupControl extends BaseFormControl {
-  type: FieldType.GROUP; // control type
-  templateOptions?: TemplateOptions; // control template options
-  childrens: FormControlType[];
+export interface NgxFormArray extends NgxBaseFormControl {
+  type: NgxFormControlType.ARRAY; // control type
+  templateOptions: NgxTemplateOptions; // control template options
+  childrens: NgxAbstractFormControl[];
+
+  // reference for an angular component
+  // IMPORTANT!! component should be injected in entryComponent array of the module
+  componentRef?: Type<any>;
 }
 
-export interface FormArrayControl extends BaseFormControl {
-  type: FieldType.ARRAY; // control type
-  templateOptions: TemplateOptions; // control template options
-  childrens: FormControlType[];
-}
-
-export type FormControlType = FormGroupControl | FormArrayControl | FormFieldControl;
-
-export interface FormConfig {
-  controls?: FormControlType[];
-}
+export type NgxAbstractFormControl = 
+  NgxFormGroup | 
+  NgxFormArray |
+  NgxFormControl |
+  NgxCustomFormComponent |
+  NgxCustomFormTemplate;

@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
-import { FormControlsConfig } from '@app/shared/forms/classes/form-config.class';
-import { FieldType, FormConfig, FormControlType } from '@app/shared/forms/interfaces/types';
+import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormControlType, FormConfig, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
 
@@ -17,14 +17,14 @@ import { AppMockModules } from '@tests/mocks/app-mock-modules';
 })
 export class MockFormControlFieldComponent {
   public form: FormGroup;
-  public field: FormControlType;
+  public field: NgxAbstractFormControl;
 
   constructor() {
     const config: FormConfig = {
       controls: [
         {
           key: 'firstName',
-          type: FieldType.TEXT,
+          type: NgxFormControlType.TEXT,
           level: 1,
           isDynamic: true,
           templateOptions: {
@@ -37,7 +37,7 @@ export class MockFormControlFieldComponent {
       ]
     };
 
-    const formConfig: FormControlsConfig = new FormControlsConfig(config);
+    const formConfig: NgxFormConfig = new NgxFormConfig(config);
     this.field = formConfig.controlsMap.firstName;
     this.form = new FormGroup({
       firstName: new FormControl('')

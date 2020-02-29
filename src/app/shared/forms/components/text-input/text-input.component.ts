@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 
 import { BaseInput } from '@app/shared/forms/classes/base-input.class';
 import { handleInputValueChangesEvent } from '@app/shared/forms/helpers/form-helpers';
-import { FormFieldControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-text-input-wrapper',
@@ -28,7 +28,7 @@ import { FormFieldControl } from '@app/shared/forms/interfaces/types';
 })
 export class TextInputWrapperComponent {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
 

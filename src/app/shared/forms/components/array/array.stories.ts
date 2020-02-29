@@ -4,7 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
 import { ArrayComponent } from '@app/shared/forms/components/array/array.component';
-import { FieldType } from '@app/shared/forms/interfaces/types';
+import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
 
@@ -27,7 +27,7 @@ storiesOf('Shared|Forms/Components/ArrayComponent', module)
       }),
       field: {
         key: 'userDetails',
-        type: FieldType.ARRAY,
+        type: NgxFormControlType.ARRAY,
         isDynamic: true,
         templateOptions: {
           displayOrder: 0
@@ -35,7 +35,7 @@ storiesOf('Shared|Forms/Components/ArrayComponent', module)
         childrens: [
           {
             key: 'lunchAttend',
-            type: FieldType.RADIO,
+            type: NgxFormControlType.RADIO,
             isDynamic: true,
             templateOptions: {
               displayOrder: 1,
@@ -53,7 +53,7 @@ storiesOf('Shared|Forms/Components/ArrayComponent', module)
           },
           {
             key: 'allergies',
-            type: FieldType.TEXTAREA,
+            type: NgxFormControlType.TEXTAREA,
             isDynamic: true,
             templateOptions: {
               displayOrder: 2,

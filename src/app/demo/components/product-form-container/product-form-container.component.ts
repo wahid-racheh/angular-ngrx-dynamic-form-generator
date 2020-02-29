@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, EventEmitter } from '@angular/core';
 import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 
@@ -8,9 +8,10 @@ import { ProductFormValidatorsService } from '@app/demo/services/product-form-va
 import { ProductFormService } from '@app/demo/services/product-form.service';
 import { ProductLoaderService } from '@app/demo/services/product-loader.service';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
-import { FormControlsConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
 import { unsubscribe } from '@app/core/utils/utils';
 import { addFormArray, removeFormArrayAt, getCheckboxStaticGroup } from '@app/shared/forms/helpers/form-helpers';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-form-container',
@@ -22,26 +23,41 @@ import { addFormArray, removeFormArrayAt, getCheckboxStaticGroup } from '@app/sh
 export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   public data$: Observable<any> = this.formsFacade.data$;
-  public formConfig$: Observable<FormControlsConfig> = this.formsFacade.formConfig$;
+  public formConfig$: Observable<NgxFormConfig> = this.formsFacade.formConfig$;
 
   private unsubscribe$: Subject<void> = new Subject<void>();
 
   public form: FormGroup;
-  public formConfig: FormControlsConfig;
+  public formConfig: NgxFormConfig;
   
   public editMode = false;
   
   private initialData:any;
 
+  public get controls(): any {
+    return this.formConfig.controlsMap || null;
+  }
+
   get productsArray(): FormArray {
-    return this.form.get(this.formConfig.controlsMap.products.key) as FormArray;
+    return this.form.get(this.controls.products.key) as FormArray;
   }
   
   get selectedProductGroup(): AbstractControl {
     if (!this.form || !this.productsArray.length) {
       return;
     }
-    return this.productsArray.at(this.form.get(this.formConfig.controlsMap.selectedProduct.key).value);
+    return this.productsArray.at(this.form.get(this.controls.selectedProduct.key).value);
+  }
+
+  private get onAddProduct(): EventEmitter<any> {
+    const {
+      productViewer: {
+        templateOptions: {
+          events: { onAddProduct }
+        }
+      }
+    } = this.controls;
+    return onAddProduct;
   }
 
   constructor(
@@ -68,8 +84,12 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
       },
       selectedProduct: ''
    };
-  }
 
+   this.onAddProduct
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => this.onProductAdd());
+  }
+  
   public ngOnInit() {
     this.formsFacade.setFormConfig(this.formConfig);
     // here you can check the page url if a product order id was specified
@@ -126,7 +146,7 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   }
 
   public onProductAdd() {
-    addFormArray(this.productsArray, this.formConfig.controlsMap.products); 
+    addFormArray(this.productsArray, this.controls.products); 
     this.initProductTypes();   
   }
 

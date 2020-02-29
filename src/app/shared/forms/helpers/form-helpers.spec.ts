@@ -10,7 +10,7 @@ import {
   isGroupControl, normalizeFormControlValues, removeFormArrayAt, removeFormControl,
   validateAllFormFields
 } from '@app/shared/forms/helpers/form-helpers';
-import { FieldType } from '@app/shared/forms/interfaces/types';
+import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
 
 // tslint:disable-next-line:no-big-function
 describe('Form helpers', () => {
@@ -90,7 +90,7 @@ describe('Form helpers', () => {
   describe('`isGroupControl`', () => {
     it('should return true if form control is a group', () => {
       // GIVEN
-      const control: any = { type: FieldType.GROUP };
+      const control: any = { type: NgxFormControlType.GROUP };
       // WHEN
       const result: boolean = isGroupControl(control);
       // THEN
@@ -99,7 +99,7 @@ describe('Form helpers', () => {
 
     it('should return false if form control is not a group', () => {
       // GIVEN
-      const control: any = { type: FieldType.TEXT };
+      const control: any = { type: NgxFormControlType.TEXT };
       // WHEN
       const result: boolean = isGroupControl(control);
       // THEN
@@ -110,7 +110,7 @@ describe('Form helpers', () => {
   describe('`isArrayControl`', () => {
     it('should return true if form control is an array', () => {
       // GIVEN
-      const control: any = { type: FieldType.ARRAY };
+      const control: any = { type: NgxFormControlType.ARRAY };
       // WHEN
       const result: boolean = isArrayControl(control);
       // THEN
@@ -119,7 +119,7 @@ describe('Form helpers', () => {
 
     it('should return false if form control is not an array', () => {
       // GIVEN
-      const control: any = { type: FieldType.TEXT };
+      const control: any = { type: NgxFormControlType.TEXT };
       // WHEN
       const result: boolean = isArrayControl(control);
       // THEN
@@ -130,7 +130,7 @@ describe('Form helpers', () => {
   describe('`isFieldControl`', () => {
     it('should return true if form control is a field', () => {
       // GIVEN
-      const control: any = { type: FieldType.TEXT };
+      const control: any = { type: NgxFormControlType.TEXT };
       // WHEN
       const result: boolean = isFieldControl(control);
       // THEN
@@ -139,7 +139,7 @@ describe('Form helpers', () => {
 
     it('should return false if form control is not a field', () => {
       // GIVEN
-      const control: any = { type: FieldType.GROUP };
+      const control: any = { type: NgxFormControlType.GROUP };
       // WHEN
       const result: boolean = isFieldControl(control);
       // THEN
@@ -153,12 +153,12 @@ describe('Form helpers', () => {
       const controls: any = [
         {
           key: 'userDetails',
-          type: FieldType.GROUP,
+          type: NgxFormControlType.GROUP,
           isDynamic: true,
           childrens: [
             {
               key: 'lunchAttend',
-              type: FieldType.RADIO,
+              type: NgxFormControlType.RADIO,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -182,12 +182,12 @@ describe('Form helpers', () => {
       const controls: any = [
         {
           key: 'userDetails',
-          type: FieldType.GROUP,
+          type: NgxFormControlType.GROUP,
           isDynamic: true,
           childrens: [
             {
               key: 'lunchAttend',
-              type: FieldType.RADIO,
+              type: NgxFormControlType.RADIO,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -211,12 +211,12 @@ describe('Form helpers', () => {
       const controls: any = [
         {
           key: 'userDetails',
-          type: FieldType.ARRAY,
+          type: NgxFormControlType.ARRAY,
           isDynamic: true,
           childrens: [
             {
               key: 'lunchAttend',
-              type: FieldType.RADIO,
+              type: NgxFormControlType.RADIO,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -239,7 +239,7 @@ describe('Form helpers', () => {
       // GIVEN
       const field: any = {
         key: 'lunchAttend',
-        type: FieldType.TEXTAREA,
+        type: NgxFormControlType.TEXTAREA,
         isDynamic: true,
         templateOptions: {
           displayOrder: 1,
@@ -277,12 +277,12 @@ describe('Form helpers', () => {
       const controls: any = [
         {
           key: 'userDetails',
-          type: FieldType.ARRAY,
+          type: NgxFormControlType.ARRAY,
           isDynamic: true,
           childrens: [
             {
               key: 'lunchAttend',
-              type: FieldType.RADIO,
+              type: NgxFormControlType.RADIO,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -310,12 +310,12 @@ describe('Form helpers', () => {
       const controls: any = [
         {
           key: 'userDetails',
-          type: FieldType.ARRAY,
+          type: NgxFormControlType.ARRAY,
           isDynamic: true,
           childrens: [
             {
               key: 'lunchAttend',
-              type: FieldType.RADIO,
+              type: NgxFormControlType.RADIO,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -343,7 +343,7 @@ describe('Form helpers', () => {
       // GIVEN
       const control: any = {
         key: 'lunchAttend',
-        type: FieldType.RADIO,
+        type: NgxFormControlType.RADIO,
         isDynamic: true,
         templateOptions: {
           displayOrder: 1,
@@ -367,7 +367,7 @@ describe('Form helpers', () => {
       // GIVEN
       const control: any = {
         key: 'lunchAttend',
-        type: FieldType.RADIO,
+        type: NgxFormControlType.RADIO,
         isDynamic: true,
         templateOptions: {
           displayOrder: 1,

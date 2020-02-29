@@ -9,15 +9,16 @@ import {
   ProductTypesEnum
 } from '@app/demo/interfaces/product-form.interface';
 import { ProductFormValidatorsService } from '@app/demo/services/product-form-validators.service';
-import { FormControlsConfig } from '@app/shared/forms/classes/form-config.class';
-import { FieldType, FormControlType } from '@app/shared/forms/interfaces/types';
+import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
 import { UserFacade } from '@app/core/services/user/+store/user.facade';
 import { CustomerAddressComponent } from '@app/demo/components/customer-address/customer-address.component';
+import { SelectedProductViewerComponent } from '../components/selected-product-viewer/selected-product-viewer.component';
 
 @Injectable()
 export class ProductFormService {
   public form: FormGroup;
-  public formConfig: FormControlsConfig;
+  public formConfig: NgxFormConfig;
 
   public genderList = [
     { id: 'M', text: 'Man' },
@@ -40,20 +41,34 @@ export class ProductFormService {
 
   constructor(private productValidatorsService: ProductFormValidatorsService) {
  
-    this.formConfig = new FormControlsConfig({
+    this.formConfig = new NgxFormConfig({
       controls: [
         {
           key: 'selectedProduct',
-          type: FieldType.TEXT,
+          type: NgxFormControlType.TEXT,
           isDynamic: false,
           templateOptions: {
-            displayOrder: 1,
+            displayOrder: 0,
             label: 'Selected product'
           }
         },
         {
+          key: 'productViewer',
+          type: NgxFormControlType.CUSTOM_TEMPLATE,
+          componentRef: SelectedProductViewerComponent,
+          templateOptions: {
+            displayOrder: 1,
+            events: {
+              onAddProduct: new EventEmitter()
+            }
+          },
+          extraOptions: {
+            data: this.availableTypes
+          }
+        },
+        {
           key: 'products',
-          type: FieldType.ARRAY,
+          type: NgxFormControlType.ARRAY,
           isDynamic: false,
           templateOptions: {
             displayOrder: 2
@@ -62,10 +77,10 @@ export class ProductFormService {
           childrens: [
             {
               key: 'size',
-              type: FieldType.TEXT,
+              type: NgxFormControlType.TEXT,
               isDynamic: false,
               templateOptions: {
-                displayOrder: 3,
+                displayOrder: 1,
                 label: 'First Name',
                 placeholder: 'First Name',
                 defaultValue: SizeEnum.MEDIUM
@@ -74,10 +89,10 @@ export class ProductFormService {
             },
             {
               key: 'types',
-              type: FieldType.CHECKBOX_GROUP,
+              type: NgxFormControlType.CHECKBOX_GROUP,
               isDynamic: false,
               templateOptions: {
-                displayOrder: 4,
+                displayOrder: 2,
                 label: 'Product Types',
                 placeholder: 'Product Types',
                 events: {
@@ -96,17 +111,17 @@ export class ProductFormService {
         },
         {
           key: 'customerDetails',
-          type: FieldType.GROUP,
+          type: NgxFormControlType.GROUP,
           templateOptions: {
-            displayOrder: 5
+            displayOrder: 3
           },
           validators: [this.productValidatorsService.productFormValidator()],
           childrens: [
             {
               key: 'customer',
-              type: FieldType.ASYNC_AUTOCOMPLETE,
+              type: NgxFormControlType.ASYNC_AUTOCOMPLETE,
               templateOptions: {
-                displayOrder: 6,
+                displayOrder: 1,
                 label: 'Search customer: (Nicholas)',
                 events: {
                   onReset: new EventEmitter(),
@@ -128,10 +143,26 @@ export class ProductFormService {
               validators: [Validators.required]
             },
             {
-              key: 'firstName',
-              type: FieldType.TEXT,
+              key: 'customTemplate1',
+              type: NgxFormControlType.CUSTOM_TEMPLATE,
+              htmlTemplate: `
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>
+                      This is just a custom template :
+                    </h3>
+                  </div>
+                </div>
+              `,
               templateOptions: {
-                displayOrder: 7,
+                displayOrder: 0
+              }
+            },
+            {
+              key: 'firstName',
+              type: NgxFormControlType.TEXT,
+              templateOptions: {
+                displayOrder: 2,
                 label: 'First Name',
                 placeholder: 'First Name'
               },
@@ -139,9 +170,9 @@ export class ProductFormService {
             },
             {
               key: 'lastName',
-              type: FieldType.TEXT,
+              type: NgxFormControlType.TEXT,
               templateOptions: {
-                displayOrder: 8,
+                displayOrder: 3,
                 label: 'Last Name',
                 placeholder: 'Last Name'
               },
@@ -149,9 +180,9 @@ export class ProductFormService {
             },
             {
               key: 'gender',
-              type: FieldType.RADIO,
+              type: NgxFormControlType.RADIO,
               templateOptions: {
-                displayOrder: 9,
+                displayOrder: 4,
                 label: 'Gender',
                 placeholder: 'Gender',
                 events: {
@@ -161,6 +192,7 @@ export class ProductFormService {
               extraOptions: {
                 data: this.genderList,
                 selectedValue: this.genderList[0],
+                displayInline: true,
                 optionKey: 'text',
                 optionValue: 'id'
               },
@@ -168,9 +200,9 @@ export class ProductFormService {
             },
             {
               key: 'dob',
-              type: FieldType.DATE_PICKER,
+              type: NgxFormControlType.DATE_PICKER,
               templateOptions: {
-                displayOrder: 10,
+                displayOrder: 5,
                 label: 'Date of birth',
                 placeholder: 'Date of birth',
                 events: {
@@ -186,9 +218,9 @@ export class ProductFormService {
             },
             {
               key: 'phoneNumber',
-              type: FieldType.TEXT,
+              type: NgxFormControlType.TEXT,
               templateOptions: {
-                displayOrder: 11,
+                displayOrder: 6,
                 label: 'Phone Number',
                 placeholder: 'Phone Number'
               },
@@ -201,18 +233,34 @@ export class ProductFormService {
               ]
             },
             {
+              key: 'customTemplate2',
+              type: NgxFormControlType.CUSTOM_TEMPLATE,
+              htmlTemplate: `
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>
+                      Delivery Address :
+                    </h3>
+                  </div>
+                </div>
+              `,
+              templateOptions: {
+                displayOrder: 7
+              }
+            },
+            {
               key: 'address',
-              type: FieldType.GROUP,
+              type: NgxFormControlType.GROUP,
               componentRef: CustomerAddressComponent,
               templateOptions: {
-                displayOrder: 12
+                displayOrder: 8
               },
               childrens: [
                 {
                   key: 'street',
-                  type: FieldType.TEXT,
+                  type: NgxFormControlType.TEXT,
                   templateOptions: {
-                    displayOrder: 13,
+                    displayOrder: 1,
                     label: 'Street',
                     placeholder: 'Street'
                   },
@@ -220,9 +268,9 @@ export class ProductFormService {
                 },
                 {
                   key: 'suite',
-                  type: FieldType.TEXT,
+                  type: NgxFormControlType.TEXT,
                   templateOptions: {
-                    displayOrder: 14,
+                    displayOrder: 2,
                     label: 'Apt. Number',
                     placeholder: 'Apt. Number'
                   },
@@ -230,9 +278,9 @@ export class ProductFormService {
                 },
                 {
                   key: 'city',
-                  type: FieldType.TEXT,
+                  type: NgxFormControlType.TEXT,
                   templateOptions: {
-                    displayOrder: 15,
+                    displayOrder: 3,
                     label: 'City',
                     placeholder: 'City'
                   },
@@ -240,9 +288,9 @@ export class ProductFormService {
                 },
                 {
                   key: 'zipcode',
-                  type: FieldType.TEXT,
+                  type: NgxFormControlType.TEXT,
                   templateOptions: {
-                    displayOrder: 16,
+                    displayOrder: 0,
                     label: 'Zipcode',
                     placeholder: 'Zipcode'
                   },

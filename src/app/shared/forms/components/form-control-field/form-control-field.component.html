@@ -1,5 +1,11 @@
 <ng-container
-  *ngIf="group && group.get(field.key)"
+  *ngIf="!isCustomTemplate && group && group.get(field.key)"
+  appDynamicField
+  [field]="field"
+  [group]="group"
+></ng-container>
+
+<ng-container *ngIf="isCustomTemplate"
   appDynamicField
   [field]="field"
   [group]="group"

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { TextInputComponent } from '@app/shared/forms/components/text-input/text-input.component';
-import { FormFieldControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-text-area-wrapper',
@@ -25,7 +25,7 @@ import { FormFieldControl } from '@app/shared/forms/interfaces/types';
 })
 export class TextAreaWrapperComponent {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
 

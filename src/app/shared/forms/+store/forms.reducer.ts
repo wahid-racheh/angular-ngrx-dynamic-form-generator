@@ -2,17 +2,15 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { FormGroup } from '@angular/forms';
 import * as FormActions from '@app/shared/forms/+store/forms.actions';
-import { FormControlsConfig } from '@app/shared/forms/classes/form-config.class';
-import { PageType, PageTypeDef } from '@app/shared/forms/interfaces/types';
+import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
 
 export interface FormsState {
   data: any;
-  formConfig: FormControlsConfig;
+  formConfig: NgxFormConfig;
   form: FormGroup;
   valid: boolean;
   errors: any;
   touched: boolean;
-  currentPage: PageTypeDef;
   reset: boolean;
 }
 
@@ -25,7 +23,6 @@ export const formsInitialState: FormsState = {
   formConfig: null,
   form: null,
   valid: true,
-  currentPage: PageType.CREATE_PAGE,
   errors: {},
   touched: false,
   reset: false
@@ -48,10 +45,6 @@ const reducer = createReducer(
       touched: true
     };
   }),
-  on(FormActions.setCurrentPage, (state, action) => ({
-    ...state,
-    currentPage: action.currentPage
-  })),
   on(FormActions.setFormConfig, (state, action) => {
     return {
       ...state,

@@ -2,7 +2,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-import { FieldType, FormControlType } from '@app/shared/forms/interfaces/types';
+import { NgxFormControlType, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 
 // Validate all form controls
 export const validateAllFormFields = (fg): void => {
@@ -38,47 +38,53 @@ export const handleInputValueChangesEvent = (
   return valueChanges.pipe(debounceTime(debounce), distinctUntilChanged(), takeUntil(unsubscribe));
 };
 
-export const isCheckboxGroupControl = (control: FormControlType): boolean => {
-  return control.type === FieldType.CHECKBOX_GROUP;
+export const isCustomTemplate = (control: NgxAbstractFormControl): boolean => {
+  return control.type === NgxFormControlType.CUSTOM_TEMPLATE;
 };
 
-export const isGroupControl = (control: FormControlType): boolean => {
-  return control.type === FieldType.GROUP;
+export const isCheckboxGroupControl = (control: NgxAbstractFormControl): boolean => {
+  return control.type === NgxFormControlType.CHECKBOX_GROUP;
 };
 
-export const isArrayControl = (control: FormControlType): boolean => {
-  return control.type === FieldType.ARRAY;
+export const isGroupControl = (control: NgxAbstractFormControl): boolean => {
+  return control.type === NgxFormControlType.GROUP;
 };
 
-export const isFieldControl = (control: FormControlType): boolean => {
+export const isArrayControl = (control: NgxAbstractFormControl): boolean => {
+  return control.type === NgxFormControlType.ARRAY;
+};
+
+export const isFieldControl = (control: NgxAbstractFormControl): boolean => {
   return !isGroupControl(control) && !isArrayControl(control);
 };
 
 // Build Form in recursive mode, return a FromGroup
-export const buildForm = (controls: FormControlType[]): FormGroup => {
+export const buildForm = (controls: NgxAbstractFormControl[]): FormGroup => {
   return createGroup(controls, new FormGroup({}));
 };
 
 // Return a FormGroup with nested groups, arrays and fields
-export const createGroup = (controls: FormControlType[], group: FormGroup): FormGroup => {
+export const createGroup = (controls: NgxAbstractFormControl[], group: FormGroup): FormGroup => {
   controls.forEach((control: any) => {
-    if (isArrayControl(control) || isCheckboxGroupControl(control)) {
-      group.addControl(control.key, createArray(control.childrens, new FormArray([])));
-    } else if (isGroupControl(control)) {
-      group.addControl(control.key, createGroup(control.childrens, new FormGroup({})));
-    } else {
-      group.addControl(control.key, createField(control));
-    } 
-    // TODO add aray and group validations
-    // if (control.validators && !!control.validators.length) {
-    //   group.setValidators(control.validators);
-    // }
+    if (!isCustomTemplate(control)) {
+      if (isArrayControl(control) || isCheckboxGroupControl(control)) {
+        group.addControl(control.key, createArray(control.childrens, new FormArray([])));
+      } else if (isGroupControl(control)) {
+        group.addControl(control.key, createGroup(control.childrens, new FormGroup({})));
+      } else {
+        group.addControl(control.key, createField(control));
+      } 
+      // TODO add aray and group validations
+      // if (control.validators && !!control.validators.length) {
+      //   group.setValidators(control.validators);
+      // }
+    }    
   });
   return group;
 };
 
 // Return a FormArray with nested groups and fields
-export const createArray = (controls: FormControlType[], array: FormArray): FormArray => {
+export const createArray = (controls: NgxAbstractFormControl[], array: FormArray): FormArray => {
   if (controls && !!controls.length) {
     // Add index control to identify group index in the array
     const group = createGroup(
@@ -93,7 +99,7 @@ export const createArray = (controls: FormControlType[], array: FormArray): Form
 };
 
 // Return a FormControl
-export const createField = (control: FormControlType): FormControl => {
+export const createField = (control: NgxAbstractFormControl): FormControl => {
   const defaultValue = control.templateOptions.hasOwnProperty('defaultValue') ?
       control.templateOptions.defaultValue : null;
   if (control.validators) {
@@ -140,13 +146,13 @@ export const removeFormArrayAt = (formArray: FormArray, index: number): void => 
 // Add form control, usage :
 // From a FormGroup : addFormControl(form.get('groupName') as FormGroup, 'controlName');
 // From a FormArray : addFormControl(form.get('ArrayName').at(groupIndex) as FormGroup, 'controlName');
-export const addFormControl = (group: FormGroup, field: FormControlType): void => {
+export const addFormControl = (group: FormGroup, field: NgxAbstractFormControl): void => {
   group.addControl(field.key, createField(field));
 };
 
 // Remove form control, usage :
 // From a FormGroup : removeFormControl(form.get('groupName') as FormGroup, 'controlName');
 // From a FormArray : removeFormControl(form.get('ArrayName').at(groupIndex) as FormGroup, 'controlName');
-export const removeFormControl = (group: FormGroup, field: FormControlType): void => {
+export const removeFormControl = (group: FormGroup, field: NgxAbstractFormControl): void => {
   group.removeControl(field.key);
 };

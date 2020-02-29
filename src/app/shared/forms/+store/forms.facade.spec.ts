@@ -5,7 +5,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import * as FormsActions from '@app/shared/forms/+store/forms.actions';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { FormsStore } from '@app/shared/forms/+store/forms.reducer';
-import { FormControlsConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
 import { PageType } from '@app/shared/forms/interfaces/types';
 
 describe('FormsFacade', () => {
@@ -28,7 +28,7 @@ describe('FormsFacade', () => {
 
   it('should dispatch a FormsActions.setFormConfig action when setFormConfig is called', () => {
     // GIVEN
-    const formConfig: FormControlsConfig = null;
+    const formConfig: NgxFormConfig = null;
     const action = FormsActions.setFormConfig({ formConfig });
     // WHEN
     facade.setFormConfig(formConfig);

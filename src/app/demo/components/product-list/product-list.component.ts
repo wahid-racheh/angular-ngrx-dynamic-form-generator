@@ -4,7 +4,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { SizeEnum } from '@app/core/types/size.enum';
 import { IProductItem, ITypeItem } from '@app/demo/interfaces/product-form.interface';
 import { ProductFormService } from '@app/demo/services/product-form.service';
-import { FormGroupControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormGroup } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-product-list',
@@ -13,7 +13,7 @@ import { FormGroupControl } from '@app/shared/forms/interfaces/types';
 })
 export class ProductListComponent {
   @Input()
-  public field: FormGroupControl;
+  public field: NgxFormGroup;
   @Input() 
   public group: FormGroup;
 

@@ -6,7 +6,7 @@ import { debounceTime, filter, map, takeUntil, tap } from 'rxjs/operators';
 
 import { unsubscribe } from '@app/core/utils/utils';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
-import { FormControlsConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
 import {
   addFormArray,
   buildForm,
@@ -14,7 +14,7 @@ import {
   normalizeFormControlValues,
   validateAllFormFields
 } from '@app/shared/forms/helpers/form-helpers';
-import { FormControlType, PageType } from '@app/shared/forms/interfaces/types';
+import { NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-form',
@@ -22,7 +22,7 @@ import { FormControlType, PageType } from '@app/shared/forms/interfaces/types';
 })
 export class FormComponent implements OnDestroy {
 
-  @Input() public formConfig$: Observable<FormControlsConfig>;
+  @Input() public formConfig$: Observable<NgxFormConfig>;
   @Input() public data$: Observable<any>;
   @Input() public form: FormGroup;
   @Input() public touchedForm$: Observable<boolean>;
@@ -30,12 +30,12 @@ export class FormComponent implements OnDestroy {
   @Output() public onInitForm: EventEmitter<any> = new EventEmitter();
   @Output() public onSubmit: EventEmitter<any> = new EventEmitter<any>();
 
-  public formConfig: FormControlsConfig;
+  public formConfig: NgxFormConfig;
   public unsubscribe$: Subject<void> = new Subject();
   public unsubscribeDataInitialization$: Subject<void> = new Subject();
   public resetFlag$: Observable<boolean> = this.formsFacade.resetFlag$;
 
-  public controls: FormControlType[];
+  public controls: NgxAbstractFormControl[];
 
   get isValid(): boolean {
     normalizeFormControlValues(this.form);
@@ -108,15 +108,12 @@ export class FormComponent implements OnDestroy {
     });
   }
 
-  public handleUpdate() {
-    this.formsFacade.setCurrentPage(PageType.UPDATE_PAGE);
-  }
-
   private buildForm(formConfig: any): FormGroup {
     this.formConfig = formConfig;
     if (formConfig) {
       const { controls } = formConfig;
       this.controls = controls;
+      console.log("controls : ",this.controls)
       return buildForm(controls);
     }    
     return new FormGroup({});
@@ -151,10 +148,12 @@ export class FormComponent implements OnDestroy {
     }
   }
 
-  private patchValue = ([form, data]) => {
+  private patchValue = ([form, data]): void => {
     !!data
       ? form.patchValue(data, { emitEvent: false })
       : form.patchValue({}, { emitEvent: false });
+
+      this.formsFacade.setForm(this.form);
   };
 
   private listenFormChanges(form: FormGroup) {
@@ -181,7 +180,7 @@ export class FormContentComponent {
   @Input()
   public form: FormGroup;
   @Input()
-  public controls: FormControlType[];
+  public controls: NgxAbstractFormControl[];
   
   public isGroup(control): boolean {
     return isGroupControl(control);

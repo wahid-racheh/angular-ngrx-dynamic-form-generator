@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { BaseInput } from '@app/shared/forms/classes/base-input.class';
-import { FormFieldControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-select-wrapper',
@@ -27,7 +27,7 @@ import { FormFieldControl } from '@app/shared/forms/interfaces/types';
 })
 export class SelectWrapperComponent {
   @Input()
-  public field: FormFieldControl;
+  public field: NgxFormControl;
   @Input()
   public group: FormControl;
   @Output()

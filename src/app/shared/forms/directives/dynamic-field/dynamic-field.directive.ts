@@ -22,26 +22,28 @@ import { RadioWrapperComponent } from '@app/shared/forms/components/radio/radio.
 import { SelectWrapperComponent } from '@app/shared/forms/components/select/select.component';
 import { TextAreaWrapperComponent } from '@app/shared/forms/components/text-area/text-area.component';
 import { TextInputWrapperComponent } from '@app/shared/forms/components/text-input/text-input.component';
-import { FieldType, FormControlType } from '@app/shared/forms/interfaces/types';
+import { NgxFormControlType, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
+import { CustomTemplateComponent } from '@app/shared/forms/components/custom-template/custom-template.component';
 
 const componentsMapper: { [key: string]: Type<any> } = {
-  [FieldType.TEXT]: TextInputWrapperComponent,
-  [FieldType.TEXTAREA]: TextAreaWrapperComponent,
-  [FieldType.NUMBER]: NumberWrapperComponent,
-  [FieldType.AUTOCOMPLETE]: AutoCompleteWrapperComponent,
-  [FieldType.ASYNC_AUTOCOMPLETE]: AutoCompleteAsyncWrapperComponent,
-  [FieldType.RADIO]: RadioWrapperComponent,
-  [FieldType.CHECKBOX_GROUP]: CheckboxGroupWrapperComponent,
-  [FieldType.SELECT]: SelectWrapperComponent,
-  [FieldType.DATE_PICKER]: DatePickerWrapperComponent,
-  [FieldType.ARRAY]: ArrayComponent
+  [NgxFormControlType.TEXT]: TextInputWrapperComponent,
+  [NgxFormControlType.TEXTAREA]: TextAreaWrapperComponent,
+  [NgxFormControlType.NUMBER]: NumberWrapperComponent,
+  [NgxFormControlType.AUTOCOMPLETE]: AutoCompleteWrapperComponent,
+  [NgxFormControlType.ASYNC_AUTOCOMPLETE]: AutoCompleteAsyncWrapperComponent,
+  [NgxFormControlType.RADIO]: RadioWrapperComponent,
+  [NgxFormControlType.CHECKBOX_GROUP]: CheckboxGroupWrapperComponent,
+  [NgxFormControlType.SELECT]: SelectWrapperComponent,
+  [NgxFormControlType.DATE_PICKER]: DatePickerWrapperComponent,
+  [NgxFormControlType.ARRAY]: ArrayComponent,
+  [NgxFormControlType.CUSTOM_TEMPLATE]: CustomTemplateComponent
 };
 
 @Directive({
   selector: '[appDynamicField]'
 })
 export class DynamicFieldDirective implements OnInit, OnChanges {
-  @Input() public field: FormControlType;
+  @Input() public field: NgxAbstractFormControl;
   @Input() public group: FormGroup;
 
   public component: ComponentRef<any>;
@@ -57,9 +59,11 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
 
   public ngOnInit() {
     if (this.field && this.field.isDynamic) {
-      const component = this.resolver.resolveComponentFactory<any>(
-        this.field.componentRef ? this.field.componentRef : componentsMapper[this.field.type]
-      );
+      let componentRef: any = componentsMapper[this.field.type];
+      if (this.field.hasOwnProperty('componentRef')) {
+        componentRef = this.field['componentRef'];
+      }
+      const component = this.resolver.resolveComponentFactory<any>(componentRef);
       this.component = this.container.createComponent(component);
       this.component.instance.field = this.field;
       this.component.instance.group = this.group;

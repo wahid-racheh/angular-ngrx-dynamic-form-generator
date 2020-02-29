@@ -10,7 +10,6 @@ export const getFormConfig = createSelector(
 export const getData = createSelector(getState, (formsState: FormsState) => formsState.data);
 export const isValid = createSelector(getState, (formsState: FormsState) => formsState.valid);
 export const getErrors = createSelector(getState, (formsState: FormsState) => formsState.errors);
-export const getCurrentPage = createSelector(getState, (state: FormsState) => state.currentPage);
 export const getForm = createSelector(getState, (state: FormsState) => state.form);
 export const getTouchedForm = createSelector(
   getState,
@@ -26,6 +25,5 @@ export const formQuery = {
   isValid,
   getErrors,
   getTouchedForm,
-  getResetFlag,
-  getCurrentPage
+  getResetFlag
 };
