@@ -1,5 +1,15 @@
 <ng-container [formGroup]="group">
   <ng-container [formArrayName]="field?.key">
+    <button
+      mat-raised-button
+      class="btn-add-item"
+      color="primary"
+      name="add"
+      type="button"
+      (click)="addField(); $event.stopPropagation()"
+    >Add
+  </button>
+
     <ng-container *ngFor="let nestedGroup of groups; let i = index" [formGroup]="nestedGroup">
       <ng-container *ngFor="let f of field.childrens">
         <ng-container *ngIf="isGroup(f)">
@@ -12,16 +22,19 @@
           <app-form-control-field [field]="f" [group]="nestedGroup"></app-form-control-field>
         </ng-container>
       </ng-container>
-      <!--
-      <div class="actions">
-        <button type="button" (click)="removeField(i); $event.stopPropagation()">
-          remove
-        </button>
-      <button type="button" (click)="addField(); $event.stopPropagation()">
-        add
-      </button>
+      
+      <div class="row">
+        <div class="col-md-12 mt-2 mb-4 clearfix">
+        <button
+            mat-raised-button
+            name="update"
+            type="remove"
+            (click)="removeField(i); $event.stopPropagation()"
+          >Remove
+        </button>    
+        </div>
       </div>
-      -->
+      
     </ng-container>
   </ng-container>
 </ng-container>

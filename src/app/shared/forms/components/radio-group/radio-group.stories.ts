@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
-import { RadioComponent } from '@app/shared/forms/components/radio/radio.component';
+import { RadioGroupComponent } from '@app/shared/forms/components/radio-group/radio-group.component';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
 
@@ -17,10 +17,10 @@ const metadata: any = {
     imports: [AppMockModules],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
   },
-  component: RadioComponent
+  component: RadioGroupComponent
 };
 
-storiesOf('Shared|Forms/Components/RadioComponent', module)
+storiesOf('Shared|Forms/Components/RadioGroupComponent', module)
   .addDecorator(withKnobs)
   .add('default', () => ({
     ...metadata,

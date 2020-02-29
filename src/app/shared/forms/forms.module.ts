@@ -41,9 +41,9 @@ import {
   NumberWrapperComponent
 } from '@app/shared/forms/components/number/number.component';
 import {
-  RadioComponent,
-  RadioWrapperComponent
-} from '@app/shared/forms/components/radio/radio.component';
+  RadioGroupComponent,
+  RadioGroupWrapperComponent
+} from '@app/shared/forms/components/radio-group/radio-group.component';
 import {
   SelectComponent,
   SelectWrapperComponent
@@ -82,8 +82,8 @@ const componentsList = [
   AutoCompleteComponent,
   AutoCompleteWrapperComponent,
   AutoCompleteAsyncWrapperComponent,
-  RadioComponent,
-  RadioWrapperComponent,
+  RadioGroupComponent,
+  RadioGroupWrapperComponent,
   CheckboxGroupComponent,
   CheckboxGroupWrapperComponent,
   SelectComponent,
@@ -100,7 +100,7 @@ const entryComponents = [
   TextAreaWrapperComponent,
   AutoCompleteWrapperComponent,
   AutoCompleteAsyncWrapperComponent,
-  RadioWrapperComponent,
+  RadioGroupWrapperComponent,
   CheckboxGroupComponent,
   CheckboxGroupWrapperComponent,
   SelectWrapperComponent,

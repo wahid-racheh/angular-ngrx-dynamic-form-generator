@@ -18,7 +18,7 @@ import {
 import { CheckboxGroupWrapperComponent } from '@app/shared/forms/components/checkbox-group/checkbox-group.component';
 import { DatePickerWrapperComponent } from '@app/shared/forms/components/date-picker/date-picker.component';
 import { NumberWrapperComponent } from '@app/shared/forms/components/number/number.component';
-import { RadioWrapperComponent } from '@app/shared/forms/components/radio/radio.component';
+import { RadioGroupWrapperComponent } from '@app/shared/forms/components/radio-group/radio-group.component';
 import { SelectWrapperComponent } from '@app/shared/forms/components/select/select.component';
 import { TextAreaWrapperComponent } from '@app/shared/forms/components/text-area/text-area.component';
 import { TextInputWrapperComponent } from '@app/shared/forms/components/text-input/text-input.component';
@@ -31,7 +31,7 @@ const componentsMapper: { [key: string]: Type<any> } = {
   [NgxFormControlType.NUMBER]: NumberWrapperComponent,
   [NgxFormControlType.AUTOCOMPLETE]: AutoCompleteWrapperComponent,
   [NgxFormControlType.ASYNC_AUTOCOMPLETE]: AutoCompleteAsyncWrapperComponent,
-  [NgxFormControlType.RADIO]: RadioWrapperComponent,
+  [NgxFormControlType.RADIO_GROUP]: RadioGroupWrapperComponent,
   [NgxFormControlType.CHECKBOX_GROUP]: CheckboxGroupWrapperComponent,
   [NgxFormControlType.SELECT]: SelectWrapperComponent,
   [NgxFormControlType.DATE_PICKER]: DatePickerWrapperComponent,

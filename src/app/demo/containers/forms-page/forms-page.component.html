@@ -1,5 +1,70 @@
 <div class="row">
   <div class="col-md-12">
-    hello
+    <app-navbar
+      class="d-block mb-3"
+      title="Form fields page"
+    ></app-navbar>
+  </div>
+  <div class="row">
+    <div class="p-5 col-md-12">
+      <!-- Form Container -->
+      <app-form [form]="form" 
+        (onSubmit)="handleSubmit($event)"
+        [formConfig$]="formConfig$"
+        [data$]="data$"
+        (onInitForm)="handleInitForm($event)"
+        (onUpdateForm)="handleUpdateData($event)">
+
+        <!-- Form Content -->
+
+        <div class="row">
+          <div class="col-md-6">
+            <app-form-content
+                [form]="form" 
+                [controls]="[formConfig.controlsMap.basicFieldsGroup]"
+              >
+              </app-form-content>
+          </div>
+          <div class="col-md-6">
+            <app-form-content
+                [form]="form" 
+                [controls]="[formConfig.controlsMap.autocompleteGroup]"
+              >
+              </app-form-content>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <app-form-content
+                [form]="form" 
+                [controls]="[formConfig.controlsMap.radioGroup]"
+              >
+              </app-form-content>
+          </div>
+          <div class="col-md-6">
+            <app-form-content
+                [form]="form" 
+                [controls]="[formConfig.controlsMap.checkboxGroup]"
+              >
+              </app-form-content>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-12">
+            <app-form-content
+                [form]="form" 
+                [controls]="[formConfig.controlsMap.otherFields]"
+              >
+              </app-form-content>
+          </div>
+        </div>
+         
+        <!-- / Form Content -->
+
+      </app-form>
+       <!-- / Form Container -->
+    </div>
   </div>
 </div>

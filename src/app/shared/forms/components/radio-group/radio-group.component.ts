@@ -8,9 +8,9 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 import { isEmpty } from '@app/shared/forms/utils/form-utils';
 
 @Component({
-  selector: 'app-radio-wrapper',
+  selector: 'app-radio-group-wrapper',
   template: `
-    <app-radio
+    <app-radio-group
       class="d-flex w-100"
       [group]="group"
       [controlName]="field.key"
@@ -25,11 +25,11 @@ import { isEmpty } from '@app/shared/forms/utils/form-utils';
       [optionKey]="field?.extraOptions?.optionKey"
       [optionValue]="field?.extraOptions?.optionValue"
       (onChange)="field?.templateOptions?.events?.onChange?.emit($event)"
-    ></app-radio>
+    ></app-radio-group>
   `,
-  styleUrls: ['./radio.component.scss']
+  styleUrls: ['./radio-group.component.scss']
 })
-export class RadioWrapperComponent {
+export class RadioGroupWrapperComponent {
   @Input()
   public field: NgxFormControl;
   @Input()
@@ -39,11 +39,11 @@ export class RadioWrapperComponent {
 }
 
 @Component({
-  selector: 'app-radio',
-  templateUrl: './radio.component.html',
-  styleUrls: ['./radio.component.scss']
+  selector: 'app-radio-group',
+  templateUrl: './radio-group.component.html',
+  styleUrls: ['./radio-group.component.scss']
 })
-export class RadioComponent extends BaseInput implements OnInit {
+export class RadioGroupComponent extends BaseInput implements OnInit {
   @Input()
   public selectedValue: any;
   @Input()

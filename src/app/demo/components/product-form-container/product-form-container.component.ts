@@ -32,58 +32,6 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   
   private initialData:any;
 
-  public get controls(): any {
-    return this.formConfig.controlsMap || null;
-  }
-
-  get productsArray(): FormArray {
-    return this.form.get(this.controls.products.key) as FormArray;
-  }
-
-  get customerDetailsGroup(): FormGroup {
-    return this.form.get(this.controls.customerDetails.key) as FormGroup;
-  }
-  
-  get selectedProductGroup(): AbstractControl {
-    if (!this.form || !this.productsArray.length) {
-      return;
-    }
-    return this.productsArray.at(this.form.get(this.controls.selectedProduct.key).value);
-  }
-
-  private get onAddProduct(): EventEmitter<any> {
-    const {
-      productViewer: {
-        templateOptions: {
-          events: { onAddProduct }
-        }
-      }
-    } = this.controls;
-    return onAddProduct;
-  }
-
-  private get onCustomerSearch(): EventEmitter<any> {
-    const {
-      customer: {
-        templateOptions: {
-          events: { onSearch }
-        }
-      }
-    } = this.controls;
-    return onSearch;
-  }
-
-  private get onSelectCustomer(): EventEmitter<any> {
-    const {
-      customer: {
-        templateOptions: {
-          events: { onSelectItem }
-        }
-      }
-    } = this.controls;
-    return onSelectItem;
-  }
-
   constructor(
     private productFormService: ProductFormService,
     private formsFacade: FormsFacade,
@@ -162,7 +110,6 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
     const data: IProductFormInterface = { ...value };
     this.formsFacade.updateData(data);
     const order: IProductFormInterface = this.productFormService.createProductOrder(data);
-    console.log("order : ", order)
     alert(`Thanks ${order.customerDetails.firstName}, the product is on the way!`);
   }
 
@@ -202,5 +149,61 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   public onProductSelected(index: number) {
     this.selectProductForEdit(index);
+  }
+
+  /**
+   * Getters
+   */
+  public get controls(): any {
+    // return map of controls
+    return this.formConfig.controlsMap || null;
+  }
+
+  public get productsArray(): FormArray {
+    return this.form.get(this.controls.products.key) as FormArray;
+  }
+
+  public get customerDetailsGroup(): FormGroup {
+    return this.form.get(this.controls.customerDetails.key) as FormGroup;
+  }
+  
+  public get selectedProductGroup(): AbstractControl {
+    if (!this.form || !this.productsArray.length) {
+      return;
+    }
+    return this.productsArray.at(this.form.get(this.controls.selectedProduct.key).value);
+  }
+
+  private get onAddProduct(): EventEmitter<any> {
+    const {
+      productViewer: {
+        templateOptions: {
+          events: { onAddProduct }
+        }
+      }
+    } = this.controls;
+    return onAddProduct;
+  }
+
+  private get onCustomerSearch(): EventEmitter<any> {
+    const {
+      customer: {
+        templateOptions: {
+          events: { onSearch }
+        }
+      }
+    } = this.controls;
+    return onSearch;
+  }
+
+  private get onSelectCustomer(): EventEmitter<any> {
+    const {
+      customer: {
+        templateOptions: {
+          events: { onSelectItem }
+        }
+      }
+    } = this.controls;
+    return onSelectItem;
   }
 }

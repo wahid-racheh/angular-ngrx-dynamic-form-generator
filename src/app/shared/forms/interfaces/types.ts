@@ -12,7 +12,7 @@ export enum NgxFormControlType {
   AUTOCOMPLETE = 'AUTOCOMPLETE',
   ASYNC_AUTOCOMPLETE = 'ASYNC_AUTOCOMPLETE',
   CHECKBOX_GROUP = 'CHECKBOX_GROUP',
-  RADIO = 'RADIO',
+  RADIO_GROUP = 'RADIO_GROUP',
   NUMBER = 'NUMBER',
   DATE_PICKER = 'DATE_PICKER',
   SELECT = 'SELECT'
@@ -24,7 +24,7 @@ export type _NgxFormControlType =
   | NgxFormControlType.AUTOCOMPLETE
   | NgxFormControlType.ASYNC_AUTOCOMPLETE
   | NgxFormControlType.CHECKBOX_GROUP
-  | NgxFormControlType.RADIO
+  | NgxFormControlType.RADIO_GROUP
   | NgxFormControlType.NUMBER
   | NgxFormControlType.DATE_PICKER
   | NgxFormControlType.SELECT;

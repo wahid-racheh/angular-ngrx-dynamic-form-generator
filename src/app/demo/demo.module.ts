@@ -14,17 +14,17 @@ import { DemoResolverService } from '@app/demo/resolvers/demo-resolver.service';
 import { SharedModule } from '@app/shared/shared.module';
 import { CustomerAddressComponent } from './components/customer-address/customer-address.component';
 import { FormsPageComponent } from './containers/forms-page/forms-page.component';
+import { CustomTextComponent } from './components/custom-text/custom-text.component';
 
-const entryComponents: any[] = [CustomerAddressComponent, SelectedProductViewerComponent];
+const entryComponents: any[] = [CustomerAddressComponent, SelectedProductViewerComponent, CustomTextComponent];
 
 @NgModule({
   declarations: [
     FormsPageComponent,
-    CustomerAddressComponent,
     DemoContainerComponent,
     ProductFormContainerComponent,
-    SelectedProductViewerComponent,
-    ProductListComponent
+    ProductListComponent,
+    ...entryComponents
   ],
   imports: [
     SharedModule,

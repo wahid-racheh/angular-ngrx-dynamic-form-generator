@@ -35,7 +35,7 @@ storiesOf('Shared|Forms/Components/ArrayComponent', module)
         childrens: [
           {
             key: 'lunchAttend',
-            type: NgxFormControlType.RADIO,
+            type: NgxFormControlType.RADIO_GROUP,
             isDynamic: true,
             templateOptions: {
               displayOrder: 1,
