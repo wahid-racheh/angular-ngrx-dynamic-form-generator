@@ -81,29 +81,29 @@ export class CheckboxGroupComponent extends BaseInput implements OnInit {
   private initFormArray(): void {
     if (this.group) {
       this.preventInitialization = false;
-      const formArray: FormArray = this.mapToCheckboxArrayGroup(this.data);
-      formArray.controls.forEach((control: AbstractControl) => {
-        this.initSelectedValues(control);
-        this.controlArray.push(control);
-      });
+      if (!this.controlArray.value.length) {
+        this.data.forEach((item: any) => {
+          this.controlArray.push(getCheckboxStaticGroup(item[this.optionKey], item[this.optionValue], false));
+        });
+      }    
+      this.initSelectedValues();      
     }
   }
 
-  private initSelectedValues(control: AbstractControl) {
-    const {
-      value: { value: controlValue }
-    } = control;
+  private initSelectedValues(): void {
     if (this.selectedValues && !!this.selectedValues.length) {
-      const elem: any = this.selectedValues.find(item => item[this.optionValue] === controlValue);
-      if (!isEmpty(elem)) {
-        control.patchValue(
-          {
-            ...control.value,
-            selected: elem.value
-          },
-          { emitEvent: false }
-        );
-      }
+      this.controlArray.controls.forEach((control: AbstractControl) => {
+        const elem: any = this.selectedValues.find(item => item[this.optionValue] === control.value.value);
+        if (!isEmpty(elem)) {
+          control.patchValue(
+            {
+              ...control.value,
+              selected: true
+            },
+            { onlySelf: true, emitEvent: false }
+          );
+        }
+      });
     }
   }
 
@@ -119,13 +119,5 @@ export class CheckboxGroupComponent extends BaseInput implements OnInit {
       const items: any = values.filter(item => item.selected);
       this.onChange.emit(items);
     }
-  }
-
-  private mapToCheckboxArrayGroup(data: any[]): FormArray {
-    return new FormArray(
-      data.map((item: any) => {
-        return getCheckboxStaticGroup(item[this.optionKey], item[this.optionValue], false);
-      })
-    );
   }
 }

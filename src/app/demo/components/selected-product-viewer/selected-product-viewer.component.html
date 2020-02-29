@@ -13,17 +13,14 @@
     </div>
     <div class="col-md-12 mg-top-15">
       <h5>Types</h5>
-    <div class="typesSelector" formArrayName="types">
-        <div
-          class="typesSelector__item"
-          *ngFor="let type of typesArray.controls"
-          [formGroup]="type"
-        >
-          <mat-checkbox *ngIf="type.get('selected')" [formControl]="type.get('selected')">
-            {{ type.get('name').value }}
-          </mat-checkbox>
-        </div>
-      </div>
+      <app-checkbox-group
+        [group]="selectedProductGroup"
+        controlName="types"
+        optionKey="key"
+        optionValue="value"
+        [data]="field.extraOptions.data"
+        [displayInline]="true"
+      ></app-checkbox-group>
     </div>
   </div>
   <div class="row" *ngIf="!selectedProductGroup" style="height: 100%">

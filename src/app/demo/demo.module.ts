@@ -13,11 +13,13 @@ import { DemoRoutingModule } from '@app/demo/demo-routing.module';
 import { DemoResolverService } from '@app/demo/resolvers/demo-resolver.service';
 import { SharedModule } from '@app/shared/shared.module';
 import { CustomerAddressComponent } from './components/customer-address/customer-address.component';
+import { FormsPageComponent } from './containers/forms-page/forms-page.component';
 
 const entryComponents: any[] = [CustomerAddressComponent, SelectedProductViewerComponent];
 
 @NgModule({
   declarations: [
+    FormsPageComponent,
     CustomerAddressComponent,
     DemoContainerComponent,
     ProductFormContainerComponent,

@@ -112,7 +112,6 @@ export class FormComponent implements OnDestroy {
     if (formConfig) {
       const { controls } = formConfig;
       this.controls = controls;
-      console.log("controls : ",this.controls)
       return buildForm(controls);
     }    
     return new FormGroup({});
