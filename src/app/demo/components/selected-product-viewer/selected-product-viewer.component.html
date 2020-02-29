@@ -13,13 +13,13 @@
     </div>
     <div class="col-md-12 mg-top-15">
       <h5>Types</h5>
-      <div class="typesSelector" formArrayName="types">
+    <div class="typesSelector" formArrayName="types">
         <div
           class="typesSelector__item"
           *ngFor="let type of typesArray.controls"
           [formGroup]="type"
         >
-          <mat-checkbox [formControl]="type.get('selected')">
+          <mat-checkbox *ngIf="type.get('selected')" [formControl]="type.get('selected')">
             {{ type.get('name').value }}
           </mat-checkbox>
         </div>
@@ -31,7 +31,7 @@
       <h4>
         You have not selected any products yet.
       </h4>
-      <button mat-button color="primary" (click)="addProduct.emit()">
+      <button mat-button type="button" color="primary" (click)="addProduct.emit()">
         <mat-icon>add_circle</mat-icon>
         Add one
       </button>

@@ -14,13 +14,15 @@
   },
   "GLOBAL": {
     "SELECT": "- Sélectionner -",
+    "SAVE": "Enregistrer",
     "FIRST_NAME": "Nom",
     "LAST_NAME": "Prénom",
     "PHONE": "Téléphone",
     "LARGE": "LARGE",
     "SMALL": "PETIT",
     "MEDIUM": "MOYEN",
-    "GENDER": "Sex"
+    "GENDER": "Sex",
+    "RESET": "Reset"
   },
   "DEMO": {
     "CUSTOMER_DETAILS": "Details Client",

@@ -32,8 +32,8 @@ import {
 } from '@app/shared/forms/components/date-picker/date-picker.component';
 import {
   FormComponent,
-  FormContainerComponent
-} from '@app/shared/forms/components/form-container/form-container.component';
+  FormContentComponent
+} from '@app/shared/forms/components/form-container/form-content.component';
 import { FormControlFieldComponent } from '@app/shared/forms/components/form-control-field/form-control-field.component';
 import { FormControlGroupComponent } from '@app/shared/forms/components/form-control-group/form-control-group.component';
 import {
@@ -66,7 +66,7 @@ const componentsList = [
   AutocompleteDirective,
   ErrorMessageComponent,
   FormComponent,
-  FormContainerComponent,
+  FormContentComponent,
   FormControlGroupComponent,
   FormControlFieldComponent,
   SizePickerComponent,

@@ -4,6 +4,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { SizeEnum } from '@app/core/types/size.enum';
 import { IProductItem, ITypeItem } from '@app/demo/interfaces/product-form.interface';
 import { ProductFormService } from '@app/demo/services/product-form.service';
+import { FormGroupControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
   selector: 'app-product-list',
@@ -11,7 +12,10 @@ import { ProductFormService } from '@app/demo/services/product-form.service';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent {
-  @Input() public group: FormGroup;
+  @Input()
+  public field: FormGroupControl;
+  @Input() 
+  public group: FormGroup;
 
   @Output() public deleteProduct = new EventEmitter<number>();
   @Output() public addProduct = new EventEmitter();

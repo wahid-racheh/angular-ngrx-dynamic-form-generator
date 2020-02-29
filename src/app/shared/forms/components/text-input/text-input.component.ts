@@ -16,6 +16,7 @@ import { FormFieldControl } from '@app/shared/forms/interfaces/types';
       [label]="field?.templateOptions?.label"
       [placeholder]="field?.templateOptions?.placeholder"
       [cssClassName]="field?.templateOptions?.cssClassName"
+      [defaultValue]="field?.templateOptions?.defaultValue"      
       [inputStyle]="field?.templateOptions?.inputStyle"
       [attributes]="field?.templateOptions?.attributes"
       (onBlur)="field?.templateOptions?.events?.onBlur.emit($event)"
@@ -45,12 +46,19 @@ export class TextInputWrapperComponent {
   styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent extends BaseInput implements OnInit {
+  
+  @Input()
+  public defaultValue: string;
+
   constructor() {
     super();
   }
   public ngOnInit(): void {
     if (this.group) {
       this.control = this.group.get(this.controlName) as FormControl;
+      if (this.defaultValue) {
+        this.control.patchValue(this.defaultValue, { onlySelf: true, emitEvent: false}); 
+      }
       handleInputValueChangesEvent(
         this.control.valueChanges,
         this.debounceTime,

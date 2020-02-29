@@ -21,11 +21,21 @@ import { FormControlType, PageType } from '@app/shared/forms/interfaces/types';
   templateUrl: './app-form.component.html'
 })
 export class FormComponent implements OnDestroy {
-  @Output() public onSubmit: EventEmitter<any> = new EventEmitter<any>();
-  @Input() public form: FormGroup;
 
-  public resetFlag$: Observable<boolean> = this.formsFacade.resetFlag$;
+  @Input() public formConfig$: Observable<FormControlsConfig>;
+  @Input() public data$: Observable<any>;
+  @Input() public form: FormGroup;
+  @Input() public touchedForm$: Observable<boolean>;
+  @Output() public onUpdateForm: EventEmitter<any> = new EventEmitter();
+  @Output() public onInitForm: EventEmitter<any> = new EventEmitter();
+  @Output() public onSubmit: EventEmitter<any> = new EventEmitter<any>();
+
+  public formConfig: FormControlsConfig;
   public unsubscribe$: Subject<void> = new Subject();
+  public unsubscribeDataInitialization$: Subject<void> = new Subject();
+  public resetFlag$: Observable<boolean> = this.formsFacade.resetFlag$;
+
+  public controls: FormControlType[];
 
   get isValid(): boolean {
     normalizeFormControlValues(this.form);
@@ -46,48 +56,6 @@ export class FormComponent implements OnDestroy {
     });
   }
 
-  public handleOnSubmit(value) {
-    const valid: boolean = this.isValid;
-    if (valid) {
-      this.formsFacade.setData(value);
-    }
-    this.onSubmit.emit({
-      valid,
-      value
-    });
-  }
-
-  public ngOnDestroy() {
-    unsubscribe(this.unsubscribe$);
-  }
-}
-
-@Component({
-  selector: 'app-form-container',
-  templateUrl: './form-container.component.html',
-  styleUrls: []
-})
-export class FormContainerComponent implements OnInit, OnDestroy {
-  @Input() public formConfig$: Observable<FormControlsConfig>;
-  @Input() public data$: Observable<any>;
-  @Input() public touchedForm$: Observable<boolean>;
-  @Output() public onUpdateForm: EventEmitter<any> = new EventEmitter();
-  @Output() public onInitForm: EventEmitter<any> = new EventEmitter();
-  @Output() public onSubmit: EventEmitter<any> = new EventEmitter<any>();
-
-  public form: FormGroup;
-  public formConfig: FormControlsConfig;
-  public unsubscribe$: Subject<void> = new Subject();
-  public unsubscribeDataInitialization$: Subject<void> = new Subject();
-
-  public controls: FormControlType[];
-
-  constructor(private formsFacade: FormsFacade) {}
-
-  public isGroup(control): boolean {
-    return isGroupControl(control);
-  }
-
   public ngOnInit() {
     if (this.formConfig$) {
       this.formConfig$
@@ -106,11 +74,13 @@ export class FormContainerComponent implements OnInit, OnDestroy {
         this.data$.pipe(takeUntil(this.unsubscribeDataInitialization$)).subscribe((data: any) => {
           if (this.form) {
             this.updateFormMetadata(this.form, data);
-            setTimeout(() => {
+            const timeout = setTimeout(() => {
               this.form.patchValue(data, { emitEvent: false });
+              this.formsFacade.setForm(this.form);
               // Unsubscribe this event once form values initialized
               this.unsubscribeDataInitialization$.next();
               this.unsubscribeDataInitialization$.complete();
+              clearTimeout(timeout);
             }, 0);
           }
         });
@@ -127,15 +97,29 @@ export class FormContainerComponent implements OnInit, OnDestroy {
     }
   }
 
+  public handleOnSubmit(value) {
+    const valid: boolean = this.isValid;
+    if (valid) {
+      this.formsFacade.setData(value);
+    }
+    this.onSubmit.emit({
+      valid,
+      value
+    });
+  }
+
   public handleUpdate() {
     this.formsFacade.setCurrentPage(PageType.UPDATE_PAGE);
   }
 
   private buildForm(formConfig: any): FormGroup {
     this.formConfig = formConfig;
-    const { controls } = formConfig;
-    this.controls = controls;
-    return buildForm(controls);
+    if (formConfig) {
+      const { controls } = formConfig;
+      this.controls = controls;
+      return buildForm(controls);
+    }    
+    return new FormGroup({});
   }
 
   // Iterate over form controls recursively and
@@ -146,7 +130,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
       const field: any = this.formConfig.controlsMap[key];
       if (abstractControl instanceof FormGroup || abstractControl instanceof FormArray) {
         if (abstractControl instanceof FormArray) {
-          // Merge data and control values to get all array itemss
+          // Merge data and control values to get all array items
           const values = merge(data[key], abstractControl.value);
           this.initFormArray(abstractControl, field, values);
         }
@@ -184,5 +168,22 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     unsubscribe(this.unsubscribe$);
     unsubscribe(this.unsubscribeDataInitialization$);
+  }
+}
+
+@Component({
+  selector: 'app-form-content',
+  templateUrl: './form-content.component.html',
+  styleUrls: []
+})
+export class FormContentComponent {
+  
+  @Input()
+  public form: FormGroup;
+  @Input()
+  public controls: FormControlType[];
+  
+  public isGroup(control): boolean {
+    return isGroupControl(control);
   }
 }

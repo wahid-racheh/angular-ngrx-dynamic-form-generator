@@ -11,6 +11,7 @@ export const getData = createSelector(getState, (formsState: FormsState) => form
 export const isValid = createSelector(getState, (formsState: FormsState) => formsState.valid);
 export const getErrors = createSelector(getState, (formsState: FormsState) => formsState.errors);
 export const getCurrentPage = createSelector(getState, (state: FormsState) => state.currentPage);
+export const getForm = createSelector(getState, (state: FormsState) => state.form);
 export const getTouchedForm = createSelector(
   getState,
   (formsState: FormsState) => formsState.touched
@@ -21,6 +22,7 @@ export const formQuery = {
   getState,
   getFormConfig,
   getData,
+  getForm,
   isValid,
   getErrors,
   getTouchedForm,

@@ -37,6 +37,10 @@ const reducer = createReducer(
     ...state,
     data: action.data
   })),
+  on(FormActions.setForm, (state, action) => ({
+    ...state,
+    form: action.form
+  })),
   on(FormActions.updateData, (state, action) => {
     return {
       ...state,

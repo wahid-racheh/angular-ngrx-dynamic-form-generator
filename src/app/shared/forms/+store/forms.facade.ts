@@ -12,7 +12,7 @@ import { PageTypeDef } from '@app/shared/forms/interfaces/types';
   providedIn: 'root'
 })
 export class FormsFacade {
-  public form: FormGroup;
+  public form$ = this.store.select(formQuery.getForm);
   public data$ = this.store.select(formQuery.getData);
   public formConfig$ = this.store.select(formQuery.getFormConfig);
   public errors$ = this.store.select(formQuery.getErrors);
@@ -32,6 +32,10 @@ export class FormsFacade {
 
   public setData(data: any) {
     this.store.dispatch(FormsActions.setData({ data }));
+  }
+
+  public setForm(form: FormGroup) {
+    this.store.dispatch(FormsActions.setForm({ form }));
   }
 
   public updateData(data: any) {

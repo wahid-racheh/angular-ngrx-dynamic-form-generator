@@ -11,19 +11,19 @@ import { AppMockModules } from '@tests/mocks/app-mock-modules';
 
 // noinspection AngularMissingOrInvalidDeclarationInModule
 @Component({
-  selector: 'app-mock-form-container',
+  selector: 'app-mock-form-content',
   template: `
-    <app-form-container [formConfig$]="formConfig$">
+    <app-form-content [formConfig$]="formConfig$">
       <app-text-input
         class="d-flex w-100"
         [group]="mockForm"
         controlName="firstName"
         label="First Name"
       ></app-text-input>
-    </app-form-container>
+    </app-form-content>
   `
 })
-export class MockFormContainerComponent {
+export class MockFormContentComponent {
   public formConfig$: Observable<FormControlsConfig>;
   public mockForm: FormGroup;
 
@@ -51,13 +51,13 @@ export class MockFormContainerComponent {
   }
 }
 
-storiesOf('Shared|Forms/Components/FormContainerComponent', module)
+storiesOf('Shared|Forms/Components/FormContentComponent', module)
   .addDecorator(withKnobs)
   .add('default', () => ({
     moduleMetadata: {
       imports: [AppMockModules],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     },
-    component: MockFormContainerComponent,
+    component: MockFormContentComponent,
     props: {}
   }));

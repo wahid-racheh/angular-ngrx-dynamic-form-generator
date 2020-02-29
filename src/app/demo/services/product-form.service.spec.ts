@@ -40,43 +40,6 @@ describe('ProductFormService', () => {
     expect(productFormService.form.valid).toEqual(false);
   });
 
-  it('should calculate if the form is valid', () => {
-    productFormService.form = new FormGroup({
-      firstName: new FormControl('', Validators.required)
-    });
-    expect(productFormService.isValid).toBe(false);
-    productFormService.form.get('firstName').setValue('test');
-
-    expect(productFormService.isValid).toBe(true);
-  });
-
-  it('should add product in the products array', () => {
-    expect(productFormService.form.get('products').value.length).toEqual(0);
-    productFormService.addProduct();
-    expect(productFormService.form.get('products').value.length).toEqual(1);
-  });
-
-  it('should mark the form as dirty after product added', () => {
-    expect(productFormService.form.dirty).toEqual(false);
-    productFormService.addProduct();
-    expect(productFormService.form.dirty).toEqual(true);
-  });
-
-  it('should select a product for edit mode', () => {
-    productFormService.addProduct();
-    productFormService.addProduct();
-
-    productFormService.selectProductForEdit(0);
-    expect(productFormService.form.get('selectedProduct').value).toEqual(0);
-  });
-
-  it('should delete product', () => {
-    productFormService.addProduct();
-    expect(productFormService.form.get('products').value.length).toEqual(1);
-    productFormService.deleteProduct(0);
-    expect(productFormService.form.get('products').value.length).toEqual(0);
-  });
-
   describe('Data initialization', () => {
     let data: IProductFormInterface;
     beforeEach(() => {

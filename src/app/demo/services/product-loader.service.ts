@@ -12,22 +12,22 @@ export class ProductLoaderService {
   constructor(private productFormService: ProductFormService) {}
 
   public loadProductForEdit(data: IProductFormInterface): void {
-    this.productFormService.form.patchValue({
-      customerDetails: {
-        ...data.customerDetails
-      }
-    });
+    // this.productFormService.form.patchValue({
+    //   customerDetails: {
+    //     ...data.customerDetails
+    //   }
+    // });
 
-    for (const product of data.products) {
-      const group = this.productFormService.addProduct();
-      group.patchValue({
-        size: product.size,
-        types: this.prefillTypesSelection(
-          group.get('types').value,
-          product.types as ProductTypesEnum[]
-        )
-      });
-    }
+    // for (const product of data.products) {
+    //   const group = this.productFormService.addProduct();
+    //   group.patchValue({
+    //     size: product.size,
+    //     types: this.prefillTypesSelection(
+    //       group.get('types').value,
+    //       product.types as ProductTypesEnum[]
+    //     )
+    //   });
+    // }
   }
 
   public prefillTypesSelection(types: ITypeItem[], selectedTypes: ProductTypesEnum[]): ITypeItem[] {

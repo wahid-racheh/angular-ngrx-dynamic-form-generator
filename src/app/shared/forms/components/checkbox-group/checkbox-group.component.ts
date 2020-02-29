@@ -78,10 +78,6 @@ export class CheckboxGroupComponent extends BaseInput implements OnInit {
     return this.group.get(this.controlName) as FormArray;
   }
 
-  public get itemsArray(): FormArray {
-    return this.group.get(this.controlName) as FormArray;
-  }
-
   private initFormArray(): void {
     if (this.group) {
       this.preventInitialization = false;
@@ -97,7 +93,7 @@ export class CheckboxGroupComponent extends BaseInput implements OnInit {
     const {
       value: { value: controlValue }
     } = control;
-    if (this.selectedValues !== null && !!this.selectedValues.length) {
+    if (this.selectedValues && !!this.selectedValues.length) {
       const elem: any = this.selectedValues.find(item => item[this.optionValue] === controlValue);
       if (!isEmpty(elem)) {
         control.patchValue(

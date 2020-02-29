@@ -18,7 +18,7 @@
             {{ getProductTitle(product.value) }}
           </span>
 
-          <button mat-icon-button (click)="deleteProduct.emit(i); $event.stopPropagation()">
+          <button mat-icon-button type="button" (click)="deleteProduct.emit(i); $event.stopPropagation()">
             <mat-icon class="productList__item__icon">remove_circle</mat-icon>
           </button>
         </div>

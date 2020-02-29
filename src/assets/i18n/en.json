@@ -23,7 +23,8 @@
     "LARGE": "LARGE",
     "SMALL": "SMALL",
     "MEDIUM": "MEDIUM",
-    "GENDER": "Sex"
+    "GENDER": "Sex",
+    "RESET": "Reset"
   },
   "DEMO": {
     "CUSTOMER_DETAILS": "Customer Details",

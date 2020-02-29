@@ -64,7 +64,7 @@ export interface ExtraOptions {
   preview?: boolean;
 
   // Date picker properties
-  defaultValue?: boolean;
+  defaultValue?: moment.Moment;
   minDate?: moment.Moment;
   maxDate?: moment.Moment;
 

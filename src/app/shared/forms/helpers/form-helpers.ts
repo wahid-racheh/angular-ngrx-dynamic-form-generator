@@ -38,12 +38,16 @@ export const handleInputValueChangesEvent = (
   return valueChanges.pipe(debounceTime(debounce), distinctUntilChanged(), takeUntil(unsubscribe));
 };
 
+export const isCheckboxGroupControl = (control: FormControlType): boolean => {
+  return control.type === FieldType.CHECKBOX_GROUP;
+};
+
 export const isGroupControl = (control: FormControlType): boolean => {
   return control.type === FieldType.GROUP;
 };
 
 export const isArrayControl = (control: FormControlType): boolean => {
-  return control.type === FieldType.ARRAY || control.type === FieldType.CHECKBOX_GROUP;
+  return control.type === FieldType.ARRAY;
 };
 
 export const isFieldControl = (control: FormControlType): boolean => {
@@ -58,13 +62,17 @@ export const buildForm = (controls: FormControlType[]): FormGroup => {
 // Return a FormGroup with nested groups, arrays and fields
 export const createGroup = (controls: FormControlType[], group: FormGroup): FormGroup => {
   controls.forEach((control: any) => {
-    if (isArrayControl(control)) {
+    if (isArrayControl(control) || isCheckboxGroupControl(control)) {
       group.addControl(control.key, createArray(control.childrens, new FormArray([])));
     } else if (isGroupControl(control)) {
       group.addControl(control.key, createGroup(control.childrens, new FormGroup({})));
     } else {
       group.addControl(control.key, createField(control));
-    }
+    } 
+    // TODO add aray and group validations
+    // if (control.validators && !!control.validators.length) {
+    //   group.setValidators(control.validators);
+    // }
   });
   return group;
 };
@@ -86,7 +94,12 @@ export const createArray = (controls: FormControlType[], array: FormArray): Form
 
 // Return a FormControl
 export const createField = (control: FormControlType): FormControl => {
-  return new FormControl('', control.validators);
+  const defaultValue = control.templateOptions.hasOwnProperty('defaultValue') ?
+      control.templateOptions.defaultValue : null;
+  if (control.validators) {
+    return new FormControl(defaultValue, control.validators);
+  }
+  return new FormControl(defaultValue);
 };
 
 export const getCheckboxStaticGroup = (p1, p2, p3) => {
@@ -100,9 +113,8 @@ export const getCheckboxStaticGroup = (p1, p2, p3) => {
 // Add FormArray : addFormArray(form.get('ArrayName') as FormArray, field);
 export const addFormArray = (formArray: FormArray, field: any): void => {
   if (field.childrens) {
-    const count: number = formArray.value.length;
     // Add index input to identify group index in the array
-    const indexControl = new FormControl(count === 0 ? 1 : count);
+    const indexControl = new FormControl(formArray.value.length);
     const group: FormGroup = new FormGroup({
       index: indexControl
     });
@@ -129,7 +141,7 @@ export const removeFormArrayAt = (formArray: FormArray, index: number): void => 
 // From a FormGroup : addFormControl(form.get('groupName') as FormGroup, 'controlName');
 // From a FormArray : addFormControl(form.get('ArrayName').at(groupIndex) as FormGroup, 'controlName');
 export const addFormControl = (group: FormGroup, field: FormControlType): void => {
-  group.addControl(field.key, new FormControl('', field.validators));
+  group.addControl(field.key, createField(field));
 };
 
 // Remove form control, usage :

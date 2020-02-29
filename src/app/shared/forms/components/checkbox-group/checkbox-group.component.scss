@@ -4,14 +4,13 @@
   &__group {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     margin: 0.5rem 0;
 
     ::ng-deep {
       .mat-checkbox-layout {
         display: block;
         font-weight: unset;
-      }
-      .mat-checkbox-label {
       }
     }
 

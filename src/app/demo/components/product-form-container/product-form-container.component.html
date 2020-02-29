@@ -1,7 +1,13 @@
-<form class="form-container" [formGroup]="form">
+<app-form [form]="form" 
+      (onSubmit)="handleSubmit($event)"
+      [formConfig$]="formConfig$"
+      [data$]="data$"
+      (onInitForm)="handleInitForm($event)"
+      (onUpdateForm)="handleUpdateData($event)">
+
   <div class="row">
     <div class="col-md-12">
-      <div *ngIf="form.errors?.noProducts && form.dirty" class="ValidationErrorLabel mg-bottom-15">
+      <div *ngIf="form && form.errors?.noProducts && form.dirty" class="ValidationErrorLabel mg-bottom-15">
         {{ form.errors?.noProducts.message }}
       </div>
     </div>
@@ -20,27 +26,38 @@
 
       <div class="row">
         <div class="col-md-12">
-          <app-customer-details [group]="form.get('customerDetails')"></app-customer-details>
+          <app-form-content
+            [form]="form" 
+            [controls]="[formConfig.controlsMap.customerDetails]"
+          >
+        </app-form-content>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12 mt-2 clearfix">
+        <div class="col-md-12 mt-2 clearfix d-flex">
           <button
-            class="float-right"
-            mat-raised-button
-            color="primary"
-            (click)="submit(form.value)"
-          >
-            SUBMIT
+              mat-raised-button
+              class="mr-auto"
+              name="update"
+              type="button"
+              (click)="handleReset()"
+            >{{'GLOBAL.RESET' | translate}}
           </button>
-          <button class="float-left" mat-raised-button color (click)="reset()">
-            RESET
+        
+          <button
+              mat-raised-button
+              color="primary"
+              name="save"
+              type="submit"
+            >{{'GLOBAL.SAVE' | translate}}
           </button>
+
         </div>
       </div>
     </div>
     <div class="col-md-4">
       <app-product-list
+      *ngIf="form"
         [group]="form"
         (productSelected)="onProductSelected($event)"
         (addProduct)="onProductAdd()"
@@ -49,4 +66,5 @@
       </app-product-list>
     </div>
   </div>
-</form>
+
+</app-form>
