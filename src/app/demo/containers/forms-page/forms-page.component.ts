@@ -1,14 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
-
+import { UserFacade } from '@app/core/services/user/+store/user.facade';
+import { unsubscribe } from '@app/core/utils/utils';
+import { ProductFormValidatorsService } from '@app/demo/services/product-form-validators.service';
+import { ProductFormService } from '@app/demo/services/product-form.service';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { unsubscribe } from '@app/core/utils/utils';
-import { UserFacade } from '@app/core/services/user/+store/user.facade';
-import { ProductFormService } from '@app/demo/services/product-form.service';
-import { ProductFormValidatorsService } from '@app/demo/services/product-form-validators.service';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-forms-page',
@@ -17,7 +16,7 @@ import { ProductFormValidatorsService } from '@app/demo/services/product-form-va
   providers: [ProductFormService, ProductFormValidatorsService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormsPageComponent {
+export class FormsPageComponent implements OnInit, OnDestroy {
   public data$: Observable<any> = this.formsFacade.data$;
   public formConfig$: Observable<NgxFormConfig> = this.formsFacade.formConfig$;
 
@@ -35,7 +34,7 @@ export class FormsPageComponent {
 
     // Handle async autocomplete events
     // By calling user apis
-    // Call search user using autocomplete search term 
+    // Call search user using autocomplete search term
     this.asyncAutoCompleteWithApi.onSearch
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(term => this.handleSearchUser(term));
@@ -84,7 +83,7 @@ export class FormsPageComponent {
       this.form.get('basicFieldsGroup').patchValue(
         {
           inputText: user.username,
-          inputNumber: parseInt(user.address.zipcode),
+          inputNumber: parseInt(user.address.zipcode, 4),
           textArea: `${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}`
         },
         { emitEvent: false }

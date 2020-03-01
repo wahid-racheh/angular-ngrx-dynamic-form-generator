@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-
 import { NgxFormControl } from '@app/shared/forms/interfaces/types';
 
 @Component({
@@ -18,4 +17,3 @@ export class CustomTemplateComponent {
   @Input()
   public group: AbstractControl;
 }
-

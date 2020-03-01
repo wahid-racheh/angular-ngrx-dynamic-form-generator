@@ -85,8 +85,8 @@ export class CheckboxGroupComponent extends BaseInput implements OnInit {
         this.data.forEach((item: any) => {
           this.controlArray.push(getCheckboxStaticGroup(item[this.optionKey], item[this.optionValue], false));
         });
-      }    
-      this.initSelectedValues();      
+      }
+      this.initSelectedValues();
     }
   }
 

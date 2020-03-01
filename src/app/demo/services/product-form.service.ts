@@ -1,21 +1,16 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import moment from 'moment';
+import { EventEmitter, Injectable } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { of } from 'rxjs';
-
-import { SizeEnum } from '@app/core/types/size.enum';
-import {
-  IProductFormInterface,
-  ITypeItem,
-  ProductTypesEnum
-} from '@app/demo/interfaces/product-form.interface';
-import { ProductFormValidatorsService } from '@app/demo/services/product-form-validators.service';
-import { NgxFormConfig, INgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
 import { UserFacade } from '@app/core/services/user/+store/user.facade';
+import { SizeEnum } from '@app/core/types/size.enum';
 import { CustomerAddressComponent } from '@app/demo/components/customer-address/customer-address.component';
-import { SelectedProductViewerComponent } from '../components/selected-product-viewer/selected-product-viewer.component';
+import { IProductFormInterface, ITypeItem, ProductTypesEnum } from '@app/demo/interfaces/product-form.interface';
+import { ProductFormValidatorsService } from '@app/demo/services/product-form-validators.service';
+import { INgxFormConfig, NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
+import moment from 'moment';
+import { of } from 'rxjs';
 import { CustomTextComponent } from '../components/custom-text/custom-text.component';
+import { SelectedProductViewerComponent } from '../components/selected-product-viewer/selected-product-viewer.component';
 
 @Injectable()
 export class ProductFormService {
@@ -39,7 +34,7 @@ export class ProductFormService {
     return {
       key: i,
       value: i
-    }
+    };
   });
 
   constructor(private productValidatorsService: ProductFormValidatorsService) {
@@ -66,10 +61,10 @@ export class ProductFormService {
     return types.filter(i => i.selected);
   }
 
-
   /**
    * Product form config
    */
+  // tslint:disable-next-line:no-big-function
   private get productFormConfig(): INgxFormConfig {
       return {
         controls: [
@@ -332,6 +327,7 @@ export class ProductFormService {
   /**
    * All fields Config
    */
+  // tslint:disable-next-line:no-big-function
   private get ngxFormPageAllFieldsConfig(): INgxFormConfig {
     return {
       controls: [
@@ -474,7 +470,7 @@ export class ProductFormService {
                     }
                 },
                 extraOptions: {
-                  // It is important to set asyncQuery to true, as well as asyncData when we use async autocomplete 
+                  // It is important to set asyncQuery to true, as well as asyncData when we use async autocomplete
                   asyncQuery: true,
                   asyncData: {
                     provider: UserFacade,
@@ -716,7 +712,7 @@ export class ProductFormService {
                   ]
                 }
               ]
-            },    
+            },
             {
               key: 'customTemplate8',
               type: NgxFormControlType.CUSTOM_TEMPLATE,

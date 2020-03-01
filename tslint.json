@@ -27,6 +27,7 @@
     "max-union-size": false,
     "semicolon": [true, "always", "strict-bound-class-methods"],
     "align": [true, "parameters"],
-    "no-parameter-reassignment": false
+    "no-parameter-reassignment": false,
+    "ordered-imports": [true]
   }
 }

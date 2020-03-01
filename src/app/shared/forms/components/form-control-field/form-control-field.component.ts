@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { isCustomTemplate } from '../../helpers/form-helpers';
 import { AbstractControl } from '@angular/forms';
+import { isCustomTemplate } from '../../helpers/form-helpers';
 import { NgxFormControl } from '../../interfaces/types';
 
 @Component({

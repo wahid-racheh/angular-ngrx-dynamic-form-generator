@@ -2,13 +2,10 @@ import { Component, EventEmitter, Input, NO_ERRORS_SCHEMA, OnInit } from '@angul
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { timer } from 'rxjs';
-
 import { TextInputComponent } from '@app/shared/forms/components/text-input/text-input.component';
-import { DynamicFieldDirective } from '@app/shared/forms/directives/dynamic-field/dynamic-field.directive';
-import { NgxFormControlType, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
-
+import { NgxAbstractFormControl, NgxFormControlType } from '@app/shared/forms/interfaces/types';
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-test-dynamic-field',

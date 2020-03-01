@@ -1,8 +1,7 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { NgxAbstractFormControl, NgxFormControlType } from '@app/shared/forms/interfaces/types';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-
-import { NgxFormControlType, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 
 // Validate all form controls
 export const validateAllFormFields = (fg): void => {
@@ -79,9 +78,9 @@ export const createGroup = (controls: NgxAbstractFormControl[], group: FormGroup
         } else {
           group.addControl(control.key, createField(control));
         }
-      }    
+      }
     });
-  }  
+  }
   return group;
 };
 

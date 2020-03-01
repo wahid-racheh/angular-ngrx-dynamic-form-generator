@@ -14,7 +14,7 @@ import { NgxFormGroup } from '@app/shared/forms/interfaces/types';
 export class ProductListComponent {
   @Input()
   public field: NgxFormGroup;
-  @Input() 
+  @Input()
   public group: FormGroup;
 
   @Output() public deleteProduct = new EventEmitter<number>();

@@ -25,7 +25,7 @@ export class ProductFormValidatorsService {
   public productItemValidator(): ValidatorFn {
     return (control: FormGroup): ValidationErrors | null => {
       const errors: ValidationErrors = {};
-      
+
       const productSize: SizeEnum = control.get('size') ? control.get('size').value : '';
       const productTypes: ITypeItem[] = control.get('types') ? control.get('types').value.filter(i => i.selected) : [];
 

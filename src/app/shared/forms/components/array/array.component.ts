@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
-
-import { isGroupControl, addFormArray, removeFormArrayAt } from '@app/shared/forms/helpers/form-helpers';
+import { FormArray, FormGroup } from '@angular/forms';
+import { addFormArray, isGroupControl, removeFormArrayAt } from '@app/shared/forms/helpers/form-helpers';
 
 @Component({
   selector: 'app-array',
@@ -28,7 +27,7 @@ export class ArrayComponent implements OnInit {
   }
 
   public addField(): void {
-    addFormArray(this.formArray, this.field); 
+    addFormArray(this.formArray, this.field);
   }
 
   public removeField(index: number): void {

@@ -1,25 +1,19 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
-import { merge } from 'lodash';
-import { combineLatest, Observable, Subject } from 'rxjs';
-import { debounceTime, filter, map, takeUntil, tap } from 'rxjs/operators';
-
 import { unsubscribe } from '@app/core/utils/utils';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import {
-  addFormArray,
-  buildForm,
-  isGroupControl,
-  validateAllFormFields
-} from '@app/shared/forms/helpers/form-helpers';
+import { addFormArray, buildForm, isGroupControl, validateAllFormFields } from '@app/shared/forms/helpers/form-helpers';
 import { NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
+import { merge } from 'lodash';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { debounceTime, filter, map, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
   templateUrl: './app-form.component.html'
 })
-export class FormComponent implements OnDestroy {
+export class FormComponent implements OnInit, OnDestroy {
 
   @Input() public formConfig$: Observable<NgxFormConfig>;
   @Input() public data$: Observable<any>;
@@ -112,7 +106,7 @@ export class FormComponent implements OnDestroy {
       const { controls } = formConfig;
       this.controls = controls;
       return buildForm(controls);
-    }    
+    }
     return new FormGroup({});
   }
 
@@ -173,12 +167,12 @@ export class FormComponent implements OnDestroy {
   styleUrls: []
 })
 export class FormContentComponent {
-  
+
   @Input()
   public form: FormGroup;
   @Input()
   public controls: NgxAbstractFormControl[];
-  
+
   public isGroup(control): boolean {
     return isGroupControl(control);
   }

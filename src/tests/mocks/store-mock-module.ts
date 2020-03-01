@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
+import { errorReducer, errorStoreName } from '@app/core/interceptors/error/+store/error.reducer';
+import { i18nReducer, i18nStoreName } from '@app/core/services/i18n/+store/i18n.reducer';
+import { userReducer, userStoreName } from '@app/core/services/user/+store/user.reducer';
+import { DemoFacade } from '@app/demo/+store/demo.facade';
+import { demoReducer, demoStoreName } from '@app/demo/+store/demo.reducer';
+import { formsReducer, formsStoreName } from '@app/shared/forms/+store/forms.reducer';
 import { environment } from '@env/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { ActionReducer, ActionReducerMap, MetaReducer, StoreModule } from '@ngrx/store';
-
-import { DemoFacade } from '@app/demo/+store/demo.facade';
-import { demoStoreName, demoReducer } from '@app/demo/+store/demo.reducer';
-import { errorStoreName, errorReducer } from '@app/core/interceptors/error/+store/error.reducer';
-import { formsStoreName, formsReducer } from '@app/shared/forms/+store/forms.reducer';
-import { i18nStoreName, i18nReducer } from '@app/core/services/i18n/+store/i18n.reducer';
-import { userStoreName, userReducer } from '@app/core/services/user/+store/user.reducer';
 
 export interface State {
   router: RouterReducerState;

@@ -1,7 +1,4 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-
 import { DemoEffects } from '@app/demo/+store/demo.effects';
 import { DemoFacade } from '@app/demo/+store/demo.facade';
 import { demoInitialState, demoReducer, demoStoreName } from '@app/demo/+store/demo.reducer';
@@ -12,9 +9,11 @@ import { DemoContainerComponent } from '@app/demo/containers/demo-container/demo
 import { DemoRoutingModule } from '@app/demo/demo-routing.module';
 import { DemoResolverService } from '@app/demo/resolvers/demo-resolver.service';
 import { SharedModule } from '@app/shared/shared.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { CustomTextComponent } from './components/custom-text/custom-text.component';
 import { CustomerAddressComponent } from './components/customer-address/customer-address.component';
 import { FormsPageComponent } from './containers/forms-page/forms-page.component';
-import { CustomTextComponent } from './components/custom-text/custom-text.component';
 
 const entryComponents: any[] = [CustomerAddressComponent, SelectedProductViewerComponent, CustomTextComponent];
 

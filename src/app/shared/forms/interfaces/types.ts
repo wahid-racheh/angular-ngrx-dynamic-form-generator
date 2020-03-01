@@ -123,8 +123,8 @@ export interface NgxFormArray extends NgxBaseFormControl {
   childrens: NgxAbstractFormControl[];
 }
 
-export type NgxAbstractFormControl = 
-  NgxFormGroup | 
+export type NgxAbstractFormControl =
+  NgxFormGroup |
   NgxFormArray |
   NgxFormControl |
   NgxCustomFormComponent |

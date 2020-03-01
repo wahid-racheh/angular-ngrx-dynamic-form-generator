@@ -17,7 +17,7 @@ export class SelectedProductViewerComponent implements OnInit {
   get productsArray(): FormArray {
     return this.group.get('products') as FormArray;
   }
-  
+
   get selectedProductGroup(): AbstractControl {
     if (!this.productsArray || !this.productsArray.length) {
       return;

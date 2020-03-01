@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
 import { BaseInput } from '@app/shared/forms/classes/base-input.class';
 import { handleInputValueChangesEvent } from '@app/shared/forms/helpers/form-helpers';
 import { NgxFormControl } from '@app/shared/forms/interfaces/types';
@@ -16,7 +15,7 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
       [label]="field?.templateOptions?.label"
       [placeholder]="field?.templateOptions?.placeholder"
       [cssClassName]="field?.templateOptions?.cssClassName"
-      [defaultValue]="field?.templateOptions?.defaultValue"      
+      [defaultValue]="field?.templateOptions?.defaultValue"
       [inputStyle]="field?.templateOptions?.inputStyle"
       [attributes]="field?.templateOptions?.attributes"
       (onBlur)="field?.templateOptions?.events?.onBlur.emit($event)"
@@ -46,7 +45,7 @@ export class TextInputWrapperComponent {
   styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent extends BaseInput implements OnInit {
-  
+
   @Input()
   public defaultValue: string;
 
@@ -57,7 +56,7 @@ export class TextInputComponent extends BaseInput implements OnInit {
     if (this.group) {
       this.control = this.group.get(this.controlName) as FormControl;
       if (this.defaultValue) {
-        this.control.patchValue(this.defaultValue, { onlySelf: true, emitEvent: false}); 
+        this.control.patchValue(this.defaultValue, { onlySelf: true, emitEvent: false });
       }
       handleInputValueChangesEvent(
         this.control.valueChanges,

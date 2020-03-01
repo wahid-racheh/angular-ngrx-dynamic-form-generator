@@ -1,17 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, EventEmitter } from '@angular/core';
-import { AbstractControl, FormGroup, FormArray } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { UserFacade } from '@app/core/services/user/+store/user.facade';
+import { User } from '@app/core/services/user/models/user.interface';
+import { unsubscribe } from '@app/core/utils/utils';
 import { IProductFormInterface } from '@app/demo/interfaces/product-form.interface';
 import { ProductFormValidatorsService } from '@app/demo/services/product-form-validators.service';
 import { ProductFormService } from '@app/demo/services/product-form.service';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { unsubscribe } from '@app/core/utils/utils';
-import { addFormArray, removeFormArrayAt, getCheckboxStaticGroup } from '@app/shared/forms/helpers/form-helpers';
+import { addFormArray, getCheckboxStaticGroup, removeFormArrayAt } from '@app/shared/forms/helpers/form-helpers';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UserFacade } from '@app/core/services/user/+store/user.facade';
-import { User } from '@app/core/services/user/models/user.interface';
 
 @Component({
   selector: 'app-product-form-container',
@@ -21,7 +20,6 @@ import { User } from '@app/core/services/user/models/user.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductFormContainerComponent implements OnInit, OnDestroy {
-
   public data$: Observable<any> = this.formsFacade.data$;
   public formConfig$: Observable<NgxFormConfig> = this.formsFacade.formConfig$;
 
@@ -29,8 +27,8 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public formConfig: NgxFormConfig;
-  
-  private initialData:any;
+
+  private initialData: any;
 
   constructor(
     private productFormService: ProductFormService,
@@ -39,14 +37,12 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   ) {
     this.formConfig = this.productFormService.formConfig;
     this.initialData = {
-      customerDetails:{
-         gender: 'M',
+      customerDetails: {
+        gender: 'M'
       }
-   };
+    };
 
-   this.onAddProduct
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => this.handleAddProduct());
+    this.onAddProduct.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.handleAddProduct());
 
     this.onCustomerSearch
       .pipe(takeUntil(this.unsubscribe$))
@@ -57,25 +53,25 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
       .subscribe(customer => this.handleSelectCustomer(customer));
 
     this.userFacade.user$.pipe(takeUntil(this.unsubscribe$)).subscribe((customer: any) => {
-        if (customer && this.customerDetailsGroup) {
-          this.customerDetailsGroup.patchValue(
-            {
-              firstName: customer.username,
-              lastName: customer.name,
-              phoneNumber: customer.phone,
-              address: {
-                street: customer.address.street,
-                suite: customer.address.suite,
-                city: customer.address.city,
-                zipcode: customer.address.zipcode
-              }
-            },
-            { emitEvent: false }
-          );
-        }
-      });
+      if (customer && this.customerDetailsGroup) {
+        this.customerDetailsGroup.patchValue(
+          {
+            firstName: customer.username,
+            lastName: customer.name,
+            phoneNumber: customer.phone,
+            address: {
+              street: customer.address.street,
+              suite: customer.address.suite,
+              city: customer.address.city,
+              zipcode: customer.address.zipcode
+            }
+          },
+          { emitEvent: false }
+        );
+      }
+    });
   }
-  
+
   public ngOnInit() {
     this.formsFacade.setFormConfig(this.formConfig);
   }
@@ -87,7 +83,7 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   public handleInitForm(form) {
     this.form = form;
-    this.initProductTypes(); 
+    this.initProductTypes();
   }
 
   public handleUpdateData(changes) {
@@ -96,7 +92,7 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
 
   public handleReset() {
     while (this.productsArray.length) {
-      this.onProductDelete(0)
+      this.onProductDelete(0);
     }
     this.form.reset();
     this.formsFacade.setData(this.initialData);
@@ -128,8 +124,8 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   }
 
   public handleAddProduct() {
-    addFormArray(this.productsArray, this.controls.products); 
-    this.initProductTypes();   
+    addFormArray(this.productsArray, this.controls.products);
+    this.initProductTypes();
   }
 
   private initProductTypes() {
@@ -146,7 +142,7 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   }
 
   public onProductDelete(index: number) {
-    removeFormArrayAt(this.productsArray, index);    
+    removeFormArrayAt(this.productsArray, index);
   }
 
   public onProductSelected(index: number) {
@@ -170,7 +166,7 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
     }
     return this.form.get(this.controls.customerDetails.key) as FormGroup;
   }
-  
+
   public get selectedProductGroup(): AbstractControl {
     if (!this.form || !this.productsArray.length) {
       return;
