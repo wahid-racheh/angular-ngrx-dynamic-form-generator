@@ -1,6 +1,8 @@
 # [angular-ngrx-form-generator](https://github.com/wahid-racheh/angular-ngrx-form-generator)
 
-Preconfigured Angular Ngrx Storybook Starter Kit
+This app serves as a JSON powered dynamic form generator library for Angular. It demonstrate a preconfigured application build with angular, ngrx, storybook and material framework that bring some features to manage your application's forms by providing a JSON configuration schema as an entry, and than render dynamically and recursively all your form elements.
+
+[Live Demo](https://angular-ngrx-form-generator.netlify.com)
 
 ## Technical stack
 
@@ -90,28 +92,6 @@ The description of mentioned types:
 - test: Adding missing tests or correcting existing tests
 - docs: changing the readme or adding additional documentation
 - no-release: a specific type which you can use in specific cases when no release is needed for your change
-
-## Highlights
-
-**Angular 9** Create smarter and faster Angular apps with the latest official Angular release
-
-**NGRX** Handle app state using ngrx.
-
-**Storybook** Snapshot testing for angular components with integrated local server
-
-**Angular material** Angular material componants.
-
-**CommitLint** Lint messages on commit with husky
-
-**Prettier** Auto-format/fix your ts code according to your TSLint configuration
-
-**semantic-release** automates the whole package release workflow (should set your configurations)
-
-**Jest** Unit testing with coverage and storyshots using jest
-
-**Sonar** Code analysis and coverage preview
-
-**compodoc** Generate documentation for your app modules, components ...
 
 ## Troubleshooting
 

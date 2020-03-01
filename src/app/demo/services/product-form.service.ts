@@ -627,7 +627,7 @@ export class ProductFormService {
               <div class="row mb-3">
                   <div class="col-md-12">
                       <h4>
-                          Deeling with groups and nested groups
+                         Dealling with groups and nested groups
                       </h4>
                   </div>
               </div>
@@ -720,7 +720,7 @@ export class ProductFormService {
               <div class="mt-2 row">
                   <div class="col-md-12">
                       <h4>
-                          Deeling with arrays
+                          Dealing with arrays
                       </h4>
                   </div>
               </div>
