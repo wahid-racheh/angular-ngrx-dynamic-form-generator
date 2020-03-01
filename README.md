@@ -1,4 +1,4 @@
-# [angular-ngrx-form-generator](https://github.com/wahid-racheh/angular-ngrx-form-generator)
+# [angular-ngrx-dynamic-form-generator](https://github.com/wahid-racheh/angular-ngrx-form-generator)
 
 This app serves as a JSON powered dynamic form generator library for Angular. It demonstrate a preconfigured application build with angular, ngrx, storybook and material framework that bring some features to manage your application's forms by providing a JSON configuration schema as an entry, and than render dynamically and recursively all your form elements.
 
