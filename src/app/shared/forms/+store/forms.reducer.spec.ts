@@ -1,6 +1,5 @@
 import * as FormsActions from '@app/shared/forms/+store/forms.actions';
 import { formsInitialState, formsReducer } from '@app/shared/forms/+store/forms.reducer';
-import { PageType } from '@app/shared/forms/interfaces/types';
 
 describe('FormReducer', () => {
   describe('undefined action', () => {
@@ -83,17 +82,6 @@ describe('FormReducer', () => {
     it('should set touched, reset in the state', () => {
       // GIVEN
       const action = FormsActions.resetForm();
-      // WHEN
-      const result = formsReducer(formsInitialState, action);
-      // THEN
-      expect(result).toMatchSnapshot();
-    });
-  });
-
-  describe('SET_ACTION', () => {
-    it('should set currentPage in the state', () => {
-      // GIVEN
-      const action = FormsActions.setCurrentPage({ currentPage: PageType.CREATE_PAGE });
       // WHEN
       const result = formsReducer(formsInitialState, action);
       // THEN

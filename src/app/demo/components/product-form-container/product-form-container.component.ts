@@ -57,7 +57,7 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
       .subscribe(customer => this.handleSelectCustomer(customer));
 
     this.userFacade.user$.pipe(takeUntil(this.unsubscribe$)).subscribe((customer: any) => {
-        if (customer) {
+        if (customer && this.customerDetailsGroup) {
           this.customerDetailsGroup.patchValue(
             {
               firstName: customer.username,
@@ -133,14 +133,16 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   }
 
   private initProductTypes() {
-    const index = !!this.productsArray.length ? this.productsArray.length - 1 : 0;
-    const productTypes = this.productsArray.at(index).get('types') as FormArray;
-    if (!productTypes.value.length) {
-      this.productFormService.availableTypes.forEach((item: any) => {
-        productTypes.push(getCheckboxStaticGroup(item.key, item.value, false));
-      });
+    if (this.productsArray) {
+      const index = !!this.productsArray.length ? this.productsArray.length - 1 : 0;
+      const productTypes = this.productsArray.at(index).get('types') as FormArray;
+      if (!productTypes.value.length) {
+        this.productFormService.availableTypes.forEach((item: any) => {
+          productTypes.push(getCheckboxStaticGroup(item.key, item.value, false));
+        });
+      }
+      this.selectProductForEdit(index);
     }
-    this.selectProductForEdit(index);
   }
 
   public onProductDelete(index: number) {
@@ -155,7 +157,6 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
    * Getters
    */
   public get controls(): any {
-    // return map of controls
     return this.formConfig.controlsMap || null;
   }
 
@@ -164,6 +165,9 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
   }
 
   public get customerDetailsGroup(): FormGroup {
+    if (!this.form) {
+      return;
+    }
     return this.form.get(this.controls.customerDetails.key) as FormGroup;
   }
   

@@ -35,25 +35,20 @@ export class FormsPageComponent {
 
     // Handle async autocomplete events
     // By calling user apis
-    this.formsFacade.formConfig$
+    // Call search user using autocomplete search term 
+    this.asyncAutoCompleteWithApi.onSearch
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(() => {
+    .subscribe(term => this.handleSearchUser(term));
 
-      // Call search user using autocomplete search term 
-      this.asyncAutoCompleteWithApi.onSearch
+    // Call get user api when selecting user from autocomplete list
+    this.asyncAutoCompleteWithApi.onSelectItem
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(term => this.handleSearchUser(term));
+      .subscribe(user => this.handleSelectUser(user));
 
-      // Call get user api when selecting user from autocomplete list
-      this.asyncAutoCompleteWithApi.onSelectItem
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(user => this.handleSelectUser(user));
-
-      // Handle user data when receiving the response
-      this.userFacade.user$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((user: any) => this.setUserDetails(user));
-    });
+    // Handle user data when receiving the response
+    this.userFacade.user$
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((user: any) => this.setUserDetails(user));
   }
 
   public ngOnInit() {

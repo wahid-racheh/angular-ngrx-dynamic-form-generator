@@ -3,10 +3,17 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
-import { DEMO_TEST_ITEMS } from '@app/client/demo/constants/test-items';
 import { AutoCompleteComponent } from '@app/shared/forms/components/auto-complete/auto-complete.component';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
+import { ProductTypesEnum } from '@app/demo/interfaces/product-form.interface';
+
+const items = [...Object.values(ProductTypesEnum)].map((i: string, index: number) => {
+  return {
+    key: i,
+    value: i
+  }
+});
 
 storiesOf('Shared|Forms/Components/AutoCompleteComponent', module)
   .addDecorator(withKnobs)
@@ -25,8 +32,8 @@ storiesOf('Shared|Forms/Components/AutoCompleteComponent', module)
       }),
       controlName: 'search',
       placeholder: 'Auto Complete placeholder',
-      items: DEMO_TEST_ITEMS,
-      searchKey: 'name',
+      items,
+      searchKey: 'value',
       asyncQuery: false,
       spinnerColor: 'green',
       spinnerSize: 20,

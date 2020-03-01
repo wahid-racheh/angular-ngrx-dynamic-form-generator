@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
-import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { NgxFormControlType, FormConfig, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
+import { NgxFormConfig, INgxFormConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormControlType, NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
 
@@ -20,7 +20,7 @@ export class MockFormControlGroupComponent {
   public field: NgxAbstractFormControl;
 
   constructor() {
-    const config: FormConfig = {
+    const config: INgxFormConfig = {
       controls: [
         {
           key: 'userDetails',

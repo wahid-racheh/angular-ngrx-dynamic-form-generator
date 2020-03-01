@@ -11,7 +11,6 @@ import {
   addFormArray,
   buildForm,
   isGroupControl,
-  normalizeFormControlValues,
   validateAllFormFields
 } from '@app/shared/forms/helpers/form-helpers';
 import { NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';

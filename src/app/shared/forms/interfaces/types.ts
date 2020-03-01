@@ -86,6 +86,11 @@ export interface NgxBaseFormControl {
   className?: string; // control class name
   extraOptions?: NgxExtraOptions; // control extended options,
   validators?: any[]; // control validators
+
+  htmlTemplate?: string;
+  // reference for an angular component
+  // IMPORTANT!! component should be injected in entryComponent array of the module
+  componentRef?: Type<any>;
 }
 
 export interface NgxAbstractCustomFormControl extends NgxBaseFormControl {
@@ -94,8 +99,6 @@ export interface NgxAbstractCustomFormControl extends NgxBaseFormControl {
 }
 
 export interface NgxCustomFormComponent extends NgxAbstractCustomFormControl {
-  // reference for an angular component
-  // IMPORTANT!! component should be injected in entryComponent array of the module
   componentRef: Type<any>;
 }
 
@@ -103,34 +106,21 @@ export interface NgxCustomFormTemplate extends NgxAbstractCustomFormControl {
   htmlTemplate: string;
 }
 
-
 export interface NgxFormControl extends NgxBaseFormControl {
   type: _NgxFormControlType; // control type
   templateOptions: NgxTemplateOptions; // control template options
-
-  // reference for an angular component
-  // IMPORTANT!! component should be injected in entryComponent array of the module
-  componentRef?: Type<any>;
 }
 
 export interface NgxFormGroup extends NgxBaseFormControl {
   type: NgxFormControlType.GROUP; // control type
   templateOptions?: NgxTemplateOptions; // control template options
   childrens: NgxAbstractFormControl[];
-
-  // reference for an angular component
-  // IMPORTANT!! component should be injected in entryComponent array of the module
-  componentRef?: Type<any>;
 }
 
 export interface NgxFormArray extends NgxBaseFormControl {
   type: NgxFormControlType.ARRAY; // control type
   templateOptions: NgxTemplateOptions; // control template options
   childrens: NgxAbstractFormControl[];
-
-  // reference for an angular component
-  // IMPORTANT!! component should be injected in entryComponent array of the module
-  componentRef?: Type<any>;
 }
 
 export type NgxAbstractFormControl = 

@@ -6,7 +6,6 @@ import * as FormsActions from '@app/shared/forms/+store/forms.actions';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { FormsStore } from '@app/shared/forms/+store/forms.reducer';
 import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { PageType } from '@app/shared/forms/interfaces/types';
 
 describe('FormsFacade', () => {
   let store: MockStore<FormsStore>;
@@ -79,16 +78,6 @@ describe('FormsFacade', () => {
     const action = FormsActions.resetForm();
     // WHEN
     facade.resetForm();
-    // THEN
-    expect(store.dispatch).toHaveBeenLastCalledWith(action);
-  });
-
-  it('should dispatch a FormsActions.setCurrentPage action when setCurrentPage is called', () => {
-    // GIVEN
-    const currentPage = PageType.CREATE_PAGE;
-    const action = FormsActions.setCurrentPage({ currentPage });
-    // WHEN
-    facade.setCurrentPage(currentPage);
     // THEN
     expect(store.dispatch).toHaveBeenLastCalledWith(action);
   });

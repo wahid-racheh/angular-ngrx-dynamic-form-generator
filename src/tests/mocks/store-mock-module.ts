@@ -3,14 +3,13 @@ import { environment } from '@env/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { ActionReducer, ActionReducerMap, MetaReducer, StoreModule } from '@ngrx/store';
-import { provideMockStore } from '@ngrx/store/testing';
-import { of } from 'rxjs';
 
-import { ErrorFacade } from '@app/core/interceptors/error/+store/error.facade';
-import { UserFacade } from '@app/core/services/user/+store/user.facade';
 import { DemoFacade } from '@app/demo/+store/demo.facade';
-
-import * as userMock from '@assets/mocks/user.mock.json';
+import { demoStoreName, demoReducer } from '@app/demo/+store/demo.reducer';
+import { errorStoreName, errorReducer } from '@app/core/interceptors/error/+store/error.reducer';
+import { formsStoreName, formsReducer } from '@app/shared/forms/+store/forms.reducer';
+import { i18nStoreName, i18nReducer } from '@app/core/services/i18n/+store/i18n.reducer';
+import { userStoreName, userReducer } from '@app/core/services/user/+store/user.reducer';
 
 export interface State {
   router: RouterReducerState;
@@ -29,33 +28,16 @@ export function mockReducer(actionReducer: ActionReducer<any>): ActionReducer<an
 export const metaReducers: Array<MetaReducer<any>> = !environment.production ? [mockReducer] : [];
 
 @NgModule({
-  imports: [StoreModule.forRoot(reducers, { metaReducers }), EffectsModule.forRoot([])],
-  providers: [
-    provideMockStore(),
-    {
-      provide: ErrorFacade,
-      useValue: {
-        error$: of(new Error('Error!'))
-      }
-    },
-    {
-      provide: UserFacade,
-      useValue: {
-        user$: of(userMock.getById.successResponse),
-        isLoading$: of(false),
-        userList$: of(userMock.search.successResponse),
-        getUser: of(),
-        search: of()
-      }
-    },
-    {
-      provide: DemoFacade,
-      useValue: {
-        pageTitle$: of('My Demo App'),
-        setPageTitle: of()
-      }
-    }
+  imports: [
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forFeature(i18nStoreName, i18nReducer),
+    StoreModule.forFeature(demoStoreName, demoReducer),
+    StoreModule.forFeature(errorStoreName, errorReducer),
+    StoreModule.forFeature(userStoreName, userReducer),
+    StoreModule.forFeature(formsStoreName, formsReducer),
+    EffectsModule.forRoot([])
   ],
+  providers: [DemoFacade],
   exports: [StoreModule, EffectsModule]
 })
 export class StoreMockModule {}

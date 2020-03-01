@@ -66,20 +66,22 @@ export const buildForm = (controls: NgxAbstractFormControl[]): FormGroup => {
 
 // Return a FormGroup with nested groups, arrays and fields
 export const createGroup = (controls: NgxAbstractFormControl[], group: FormGroup): FormGroup => {
-  controls.forEach((control: any) => {
-    if (!isCustomTemplate(control)) {
-      if (isArrayControl(control) || isCheckboxGroupControl(control)) {
-        group.addControl(control.key, createArray(control, new FormArray([])));
-      } else if (isGroupControl(control)) {
-        group.addControl(control.key, createGroup(control.childrens, new FormGroup({})));
-        if (control.validators && !!control.validators.length) {
-          group.setValidators(control.validators);
+  if (controls) {
+    controls.forEach((control: any) => {
+      if (!isCustomTemplate(control)) {
+        if (isArrayControl(control) || isCheckboxGroupControl(control)) {
+          group.addControl(control.key, createArray(control, new FormArray([])));
+        } else if (isGroupControl(control)) {
+          group.addControl(control.key, createGroup(control.childrens, new FormGroup({})));
+          if (control.validators && !!control.validators.length) {
+            group.setValidators(control.validators);
+          }
+        } else {
+          group.addControl(control.key, createField(control));
         }
-      } else {
-        group.addControl(control.key, createField(control));
-      }
-    }    
-  });
+      }    
+    });
+  }  
   return group;
 };
 

@@ -19,7 +19,7 @@ export class SelectedProductViewerComponent implements OnInit {
   }
   
   get selectedProductGroup(): AbstractControl {
-    if (!this.group || !this.productsArray.length) {
+    if (!this.productsArray || !this.productsArray.length) {
       return;
     }
     return this.productsArray.at(this.group.get('selectedProduct').value);

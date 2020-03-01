@@ -4,8 +4,8 @@ import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 import { Observable, of } from 'rxjs';
 
-import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { NgxFormControlType, FormConfig } from '@app/shared/forms/interfaces/types';
+import { NgxFormConfig, INgxFormConfig } from '@app/shared/forms/classes/form-config.class';
+import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
 
@@ -28,7 +28,7 @@ export class MockFormContentComponent {
   public mockForm: FormGroup;
 
   constructor() {
-    const config: FormConfig = {
+    const config: INgxFormConfig = {
       controls: [
         {
           key: 'firstName',

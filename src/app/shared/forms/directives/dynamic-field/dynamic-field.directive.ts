@@ -59,10 +59,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
 
   public ngOnInit() {
     if (this.field && this.field.isDynamic) {
-      let componentRef: any = componentsMapper[this.field.type];
-      if (this.field.hasOwnProperty('componentRef')) {
-        componentRef = this.field['componentRef'];
-      }
+      const componentRef: any = this.field.componentRef ? this.field.componentRef : componentsMapper[this.field.type];
       const component = this.resolver.resolveComponentFactory<any>(componentRef);
       this.component = this.container.createComponent(component);
       this.component.instance.field = this.field;

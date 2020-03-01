@@ -30,16 +30,6 @@ describe('ProductFormService', () => {
     productFormService = service;
   }));
 
-  it('should initialize a form group when class gets constructed', () => {
-    expect(productFormService.form instanceof FormGroup).toEqual(true);
-  });
-
-  it('should initialize form properly', () => {
-    expect(productFormService.form.get('products').value.length).toBe(0);
-    expect(productFormService.form.get('selectedProduct').value).toBeNull();
-    expect(productFormService.form.valid).toEqual(false);
-  });
-
   describe('Data initialization', () => {
     let data: IProductFormInterface;
     beforeEach(() => {

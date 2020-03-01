@@ -6,7 +6,7 @@
           Products order
         </h2>
       </div>
-      <div class="productList__content" formArrayName="products">
+      <div class="productList__content" *ngIf="productsArray" formArrayName="products">
         <div
           class="productList__item"
           *ngFor="let product of productsArray.controls; let i = index"
