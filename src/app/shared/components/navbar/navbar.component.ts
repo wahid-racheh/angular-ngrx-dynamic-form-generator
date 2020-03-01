@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,4 +8,10 @@ import { Component, Input } from '@angular/core';
 })
 export class NavbarComponent {
   @Input() public title: string;
+
+  constructor(private router: Router) {}
+
+  public go(): void {
+    this.router.navigate(['/demo/forms'])
+  }
 }
