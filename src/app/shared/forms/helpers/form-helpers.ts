@@ -39,19 +39,19 @@ export const handleInputValueChangesEvent = (
 };
 
 export const isCustomTemplate = (control: NgxAbstractFormControl): boolean => {
-  return control.type === NgxFormControlType.CUSTOM_TEMPLATE;
+  return control && control.type === NgxFormControlType.CUSTOM_TEMPLATE;
 };
 
 export const isCheckboxGroupControl = (control: NgxAbstractFormControl): boolean => {
-  return control.type === NgxFormControlType.CHECKBOX_GROUP;
+  return control && control.type === NgxFormControlType.CHECKBOX_GROUP;
 };
 
 export const isGroupControl = (control: NgxAbstractFormControl): boolean => {
-  return control.type === NgxFormControlType.GROUP;
+  return control && control.type === NgxFormControlType.GROUP;
 };
 
 export const isArrayControl = (control: NgxAbstractFormControl): boolean => {
-  return control.type === NgxFormControlType.ARRAY;
+  return control && control.type === NgxFormControlType.ARRAY;
 };
 
 export const isFieldControl = (control: NgxAbstractFormControl): boolean => {

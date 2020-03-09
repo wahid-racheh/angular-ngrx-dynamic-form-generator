@@ -42,16 +42,18 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
       }
     };
 
-    this.onAddProduct.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.handleAddProduct());
+    if (this.formConfig) {
+      this.onAddProduct.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.handleAddProduct());
 
-    this.onCustomerSearch
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(term => this.handleSearchCustomer(term));
-
-    this.onSelectCustomer
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(customer => this.handleSelectCustomer(customer));
-
+      this.onCustomerSearch
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(term => this.handleSearchCustomer(term));
+  
+      this.onSelectCustomer
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(customer => this.handleSelectCustomer(customer));
+    }
+    
     this.userFacade.user$.pipe(takeUntil(this.unsubscribe$)).subscribe((customer: any) => {
       if (customer && this.customerDetailsGroup) {
         this.customerDetailsGroup.patchValue(
@@ -153,11 +155,11 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
    * Getters
    */
   public get controls(): any {
-    return this.formConfig.controlsMap || null;
+    return this.formConfig && this.formConfig.controlsMap || null;
   }
 
   public get productsArray(): FormArray {
-    return this.form.get(this.controls.products.key) as FormArray;
+    return this.controls ? this.form.get(this.controls.products.key) as FormArray : null;
   }
 
   public get customerDetailsGroup(): FormGroup {

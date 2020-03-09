@@ -563,13 +563,23 @@ Include the above autocomplete parameters and the following new parameters :
 | optionKey | string | Option key name. |
 | optionValue | string | Option value name. |
 
-#### 5. Radio and checkbox parameters
+#### 5. Checkbox parameters
 
 | Name | type | Description |
 | --- | --- | --- |
 | data | any | Select options. |
 | displayInline | boolean | Determine if element should be displayed inline or in multiple lines. |
 | selectedValues | any[] | Selected values. |
+| optionKey | string | Option key name. |
+| optionValue | string | Option value name. |
+
+#### 5. Radio parameters
+
+| Name | type | Description |
+| --- | --- | --- |
+| data | any | Select options. |
+| displayInline | boolean | Determine if element should be displayed inline or in multiple lines. |
+| selectedValue | any | Selected value. |
 | optionKey | string | Option key name. |
 | optionValue | string | Option value name. |
 
@@ -736,7 +746,7 @@ Text, number, textarea fields
             {id: 1, name: 'test1'},
             {id: 2, name: 'test2'}
         ],
-        selectedValues: [{id: 1, name: 'test1'}],
+        selectedValue: {id: 1, name: 'test1'},
         optionKey: 'name',
         optionValue: 'id'
     }

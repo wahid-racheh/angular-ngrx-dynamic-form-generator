@@ -21,7 +21,7 @@
           <!-- Render product viewer component in a custom template -->
           <app-form-content
             [form]="form" 
-            [controls]="[controls.productViewer]"
+            [controls]="[controls?.productViewer]"
           >
           </app-form-content>
           <!-- / Render product viewer component in a custom template -->
@@ -35,7 +35,7 @@
           <!-- Render customer details fields dynamically -->
           <app-form-content
             [form]="form" 
-            [controls]="[controls.customerDetails]"
+            [controls]="[controls?.customerDetails]"
           >
           </app-form-content>
           <!-- / Render customer details fields dynamically -->
