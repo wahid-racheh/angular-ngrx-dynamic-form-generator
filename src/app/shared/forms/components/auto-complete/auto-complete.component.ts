@@ -24,6 +24,7 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
       [controlName]="field.key"
       [disabled]="field?.templateOptions?.disabled"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [inputStyle]="field?.templateOptions?.inputStyle"
       [placeholder]="field?.templateOptions?.placeholder"
@@ -107,7 +108,7 @@ export class AutoCompleteAsyncWrapperComponent implements OnInit {
       this.facade = this.injector.get(provider);
       // data$ observable will be handled in autocomplete directive
       this.data$ = this.facade[dataSelectorName];
-      this.isLoading$ = this.facade[loadingSelectorName];
+      this.isLoading$ = this.facade[loadingSelectorName] as Observable<boolean>;
     } else {
       throw new Error('Async autocomplete require extraOptions async parameters');
     }

@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 import moment from 'moment';
@@ -29,6 +30,7 @@ storiesOf('Shared|Forms/Components/DatePickerComponent', module)
       minDate: moment()
         .clone()
         .subtract(50, 'years'),
-      maxDate: moment()
+      maxDate: moment(),
+      onChange: action('onChange event was triggered')
     }
   }));

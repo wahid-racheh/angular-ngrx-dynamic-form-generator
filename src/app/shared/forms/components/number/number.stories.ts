@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
@@ -24,6 +25,9 @@ storiesOf('Shared|Forms/Components/NumberComponent', module)
       placeholder: 'Input placeholder',
       inputStyle: { width: '100%' },
       cssClassName: 'input-label',
-      debounceTime: 300
+      debounceTime: 300,
+      onChange: action('onChange event was triggered'),
+      onFocus: action('onFocus event was triggered'),
+      onBlur: action('onBlur event was triggered')
     }
   }));

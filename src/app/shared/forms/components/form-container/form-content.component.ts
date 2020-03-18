@@ -3,7 +3,12 @@ import { FormArray, FormGroup } from '@angular/forms';
 import { unsubscribe } from '@app/core/utils/utils';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { addFormArray, buildForm, isGroupControl, validateAllFormFields } from '@app/shared/forms/helpers/form-helpers';
+import {
+  addFormArray,
+  buildForm,
+  isGroupControl,
+  validateAllFormFields
+} from '@app/shared/forms/helpers/form-helpers';
 import { NgxAbstractFormControl } from '@app/shared/forms/interfaces/types';
 import { merge } from 'lodash';
 import { combineLatest, Observable, Subject } from 'rxjs';
@@ -14,7 +19,6 @@ import { debounceTime, filter, map, takeUntil, tap } from 'rxjs/operators';
   templateUrl: './app-form.component.html'
 })
 export class FormComponent implements OnInit, OnDestroy {
-
   @Input() public formConfig$: Observable<NgxFormConfig>;
   @Input() public data$: Observable<any>;
   @Input() public form: FormGroup;
@@ -25,7 +29,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   public formConfig: NgxFormConfig;
   public unsubscribe$: Subject<void> = new Subject();
-  public unsubscribeDataInitialization$: Subject<void> = new Subject();
   public resetFlag$: Observable<boolean> = this.formsFacade.resetFlag$;
 
   public controls: NgxAbstractFormControl[];
@@ -41,8 +44,9 @@ export class FormComponent implements OnInit, OnDestroy {
   constructor(private formsFacade: FormsFacade) {
     this.resetFlag$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       if (this.form) {
-        setTimeout(() => {
+        const timeout: any = setTimeout(() => {
           this.form.reset({ emitEvent: false });
+          clearTimeout(timeout);
         });
       }
     });
@@ -60,23 +64,6 @@ export class FormComponent implements OnInit, OnDestroy {
           takeUntil(this.unsubscribe$)
         )
         .subscribe(this.patchValue);
-
-      if (this.data$) {
-        // This is a workaround to force initializing form values
-        this.data$.pipe(takeUntil(this.unsubscribeDataInitialization$)).subscribe((data: any) => {
-          if (this.form) {
-            this.updateFormMetadata(this.form, data);
-            const timeout = setTimeout(() => {
-              this.form.patchValue(data, { emitEvent: false });
-              this.formsFacade.setForm(this.form);
-              // Unsubscribe this event once form values initialized
-              this.unsubscribeDataInitialization$.next();
-              this.unsubscribeDataInitialization$.complete();
-              clearTimeout(timeout);
-            }, 0);
-          }
-        });
-      }
     }
 
     if (this.touchedForm$) {
@@ -140,11 +127,13 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   private patchValue = ([form, data]): void => {
-    !!data
-      ? form.patchValue(data, { emitEvent: false })
-      : form.patchValue({}, { emitEvent: false });
-
-      this.formsFacade.setForm(this.form);
+    const timeout: any = setTimeout(() => {
+      !!data
+        ? form.patchValue(data, { emitEvent: false })
+        : form.patchValue({}, { emitEvent: false });
+      clearTimeout(timeout);
+    });
+    this.formsFacade.setForm(this.form);
   };
 
   private listenFormChanges(form: FormGroup) {
@@ -157,7 +146,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     unsubscribe(this.unsubscribe$);
-    unsubscribe(this.unsubscribeDataInitialization$);
   }
 }
 
@@ -167,7 +155,6 @@ export class FormComponent implements OnInit, OnDestroy {
   styleUrls: []
 })
 export class FormContentComponent {
-
   @Input()
   public form: FormGroup;
   @Input()

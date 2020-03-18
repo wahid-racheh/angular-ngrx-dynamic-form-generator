@@ -1,18 +1,18 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
 import { AutoCompleteComponent } from '@app/shared/forms/components/auto-complete/auto-complete.component';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
-import { ProductTypesEnum } from '@app/demo/interfaces/product-form.interface';
 
-const items = [...Object.values(ProductTypesEnum)].map((i: string, index: number) => {
+const items = ['Option 1', 'Option 2'].map((i: string) => {
   return {
     key: i,
     value: i
-  }
+  };
 });
 
 storiesOf('Shared|Forms/Components/AutoCompleteComponent', module)
@@ -37,6 +37,9 @@ storiesOf('Shared|Forms/Components/AutoCompleteComponent', module)
       asyncQuery: false,
       spinnerColor: 'green',
       spinnerSize: 20,
-      showSpinner: false
+      showSpinner: false,
+      onSelectItem: action('onSelectItem event was triggered'),
+      onSearch: action('onSearch event was triggered'),
+      onReset: action('onReset event was triggered')
     }
   }));

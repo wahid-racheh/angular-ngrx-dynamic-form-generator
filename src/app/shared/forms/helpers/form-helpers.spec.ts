@@ -2,21 +2,27 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import {
-  addFormArray, addFormControl,
-  buildForm, createArray, createField, createGroup, getCheckboxStaticGroup,
+  addFormArray,
+  addFormControl,
+  buildForm,
+  createArray,
+  createField,
+  createGroup,
+  getCheckboxStaticGroup,
   handleInputValueChangesEvent,
   isArrayControl,
   isFieldControl,
-  isGroupControl, normalizeFormControlValues, removeFormArrayAt, removeFormControl,
+  isGroupControl,
+  normalizeFormControlValues,
+  removeFormArrayAt,
+  removeFormControl,
   validateAllFormFields
 } from '@app/shared/forms/helpers/form-helpers';
 import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
 
 // tslint:disable-next-line:no-big-function
 describe('Form helpers', () => {
-
   describe('`validateAllFormFields`', () => {
-
     it('should calculate if the form is valid', () => {
       // GIVEN
       const form: FormGroup = new FormGroup({
@@ -52,14 +58,13 @@ describe('Form helpers', () => {
   });
 
   describe('`normalizeFormControlValues`', () => {
-
     it('should remove spaces from controls values', () => {
       // GIVEN
       const form: FormGroup = new FormGroup({
         testControl1: new FormControl('   value '),
         nestedGroup: new FormGroup({
           testControl2: new FormControl('value   ')
-        }),
+        })
       });
       // WHEN
       normalizeFormControlValues(form);
@@ -158,7 +163,7 @@ describe('Form helpers', () => {
           childrens: [
             {
               key: 'lunchAttend',
-              type: NgxFormControlType.RADIO,
+              type: NgxFormControlType.RADIO_GROUP,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -187,7 +192,7 @@ describe('Form helpers', () => {
           childrens: [
             {
               key: 'lunchAttend',
-              type: NgxFormControlType.RADIO,
+              type: NgxFormControlType.RADIO_GROUP,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -216,7 +221,7 @@ describe('Form helpers', () => {
           childrens: [
             {
               key: 'lunchAttend',
-              type: NgxFormControlType.RADIO,
+              type: NgxFormControlType.RADIO_GROUP,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -282,7 +287,7 @@ describe('Form helpers', () => {
           childrens: [
             {
               key: 'lunchAttend',
-              type: NgxFormControlType.RADIO,
+              type: NgxFormControlType.RADIO_GROUP,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -315,7 +320,7 @@ describe('Form helpers', () => {
           childrens: [
             {
               key: 'lunchAttend',
-              type: NgxFormControlType.RADIO,
+              type: NgxFormControlType.RADIO_GROUP,
               isDynamic: true,
               templateOptions: {
                 displayOrder: 1,
@@ -343,7 +348,7 @@ describe('Form helpers', () => {
       // GIVEN
       const control: any = {
         key: 'lunchAttend',
-        type: NgxFormControlType.RADIO,
+        type: NgxFormControlType.RADIO_GROUP,
         isDynamic: true,
         templateOptions: {
           displayOrder: 1,
@@ -367,7 +372,7 @@ describe('Form helpers', () => {
       // GIVEN
       const control: any = {
         key: 'lunchAttend',
-        type: NgxFormControlType.RADIO,
+        type: NgxFormControlType.RADIO_GROUP,
         isDynamic: true,
         templateOptions: {
           displayOrder: 1,

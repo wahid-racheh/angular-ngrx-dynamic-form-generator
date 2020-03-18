@@ -1,7 +1,19 @@
-import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef } from '@angular/core';
+import {
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  Input,
+  OnChanges,
+  OnInit,
+  Type,
+  ViewContainerRef
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ArrayComponent } from '@app/shared/forms/components/array/array.component';
-import { AutoCompleteAsyncWrapperComponent, AutoCompleteWrapperComponent } from '@app/shared/forms/components/auto-complete/auto-complete.component';
+import {
+  AutoCompleteAsyncWrapperComponent,
+  AutoCompleteWrapperComponent
+} from '@app/shared/forms/components/auto-complete/auto-complete.component';
 import { CheckboxGroupWrapperComponent } from '@app/shared/forms/components/checkbox-group/checkbox-group.component';
 import { CustomTemplateComponent } from '@app/shared/forms/components/custom-template/custom-template.component';
 import { DatePickerWrapperComponent } from '@app/shared/forms/components/date-picker/date-picker.component';
@@ -46,7 +58,9 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
 
   public ngOnInit() {
     if (this.field && this.field.isDynamic) {
-      const componentRef: any = this.field.componentRef ? this.field.componentRef : componentsMapper[this.field.type];
+      const componentRef: any = this.field.componentRef
+        ? this.field.componentRef
+        : componentsMapper[this.field.type];
       const component = this.resolver.resolveComponentFactory<any>(componentRef);
       this.component = this.container.createComponent(component);
       this.component.instance.field = this.field;

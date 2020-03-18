@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
@@ -21,46 +22,35 @@ const metadata: any = {
     imports: [AppMockModules],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
   },
-  component: CheckboxGroupComponent
+  component: CheckboxGroupComponent,
+  props: {
+    label: 'Years of experience',
+    group,
+    controlName: 'nbYearsOfExperience',
+    placeholder: 'Years of experience',
+    data,
+    optionKey: 'text',
+    optionValue: 'id',
+    onChange: action('onChange event was triggered')
+  }
 };
 
 storiesOf('Shared|Forms/Components/CheckboxGroupComponent', module)
   .addDecorator(withKnobs)
   .add('default', () => ({
-    ...metadata,
-    props: {
-      label: 'Years of experience',
-      group,
-      controlName: 'nbYearsOfExperience',
-      placeholder: 'Years of experience',
-      data,
-      optionKey: 'text',
-      optionValue: 'id'
-    }
+    ...metadata
   }))
   .add('initial value', () => ({
     ...metadata,
     props: {
-      label: 'Years of experience',
-      group,
-      controlName: 'nbYearsOfExperience',
-      placeholder: 'Years of experience',
-      data,
-      optionKey: 'text',
-      optionValue: 'id',
+      ...metadata.props,
       selectedValues: [data[1]]
     }
   }))
   .add('column display', () => ({
     ...metadata,
     props: {
-      label: 'Years of experience',
-      group,
-      controlName: 'nbYearsOfExperience',
-      placeholder: 'Years of experience',
-      data,
-      optionKey: 'text',
-      optionValue: 'id',
+      ...metadata.props,
       selectedValues: [data[1]],
       displayInline: false
     }

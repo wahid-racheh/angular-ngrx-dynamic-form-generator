@@ -13,6 +13,7 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
       [controlName]="field.key"
       [disabled]="field?.templateOptions?.disabled"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [placeholder]="field?.templateOptions?.placeholder"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [inputStyle]="field?.templateOptions?.inputStyle"

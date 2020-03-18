@@ -13,6 +13,7 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
       [disabled]="field?.templateOptions?.disabled"
       [controlName]="field.key"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [inputStyle]="field?.templateOptions?.inputStyle"
       [placeholder]="field?.templateOptions?.placeholder"
@@ -65,10 +66,8 @@ export class SelectComponent extends BaseInput implements OnInit {
 
   public handleChange(event: any): void {
     const { value } = event;
-    if (value) {
-      const element: any = this.data.find(
-        item => item[this.optionValue] === event[this.optionValue]
-      );
+    if (value !== null && value !== undefined) {
+      const element: any = this.data.find(item => item[this.optionValue] === value);
       this.onChange.emit(element);
     }
   }

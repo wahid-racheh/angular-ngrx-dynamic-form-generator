@@ -14,6 +14,7 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
       [controlName]="field.key"
       [disabled]="field?.templateOptions?.disabled"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [placeholder]="field?.templateOptions?.placeholder"
       [defaultValue]="field?.extraOptions?.defaultValue"
@@ -58,11 +59,17 @@ export class DatePickerComponent extends BaseInput implements OnInit {
   }
 
   public handleChange(date: moment.Moment): void {
-    const newDate = moment()
-      .clone()
-      .year(date.year())
-      .month(date.month())
-      .date(date.date());
-    this.onChange.emit(newDate);
+    const d: moment.Moment = moment(date);
+    if (d.isValid()) {
+      const newDate = moment()
+        .clone()
+        .year(d.year())
+        .month(d.month())
+        .date(d.date())
+        .hour(d.hour())
+        .minute(d.minute())
+        .second(d.second());
+      this.onChange.emit(newDate);
+    }
   }
 }

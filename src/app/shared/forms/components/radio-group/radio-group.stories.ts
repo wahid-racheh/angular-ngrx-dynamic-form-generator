@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
@@ -17,53 +18,38 @@ const metadata: any = {
     imports: [AppMockModules],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
   },
-  component: RadioGroupComponent
+  component: RadioGroupComponent,
+  props: {
+    label: 'Job',
+    group: new FormGroup({
+      job: new FormControl()
+    }),
+    controlName: 'job',
+    placeholder: 'Job',
+    data,
+    optionKey: 'name',
+    optionValue: 'id',
+    onChange: action('onChange event was triggered')
+  }
 };
 
 storiesOf('Shared|Forms/Components/RadioGroupComponent', module)
   .addDecorator(withKnobs)
   .add('default', () => ({
-    ...metadata,
-    props: {
-      label: 'Job',
-      group: new FormGroup({
-        job: new FormControl()
-      }),
-      controlName: 'job',
-      placeholder: 'Job',
-      data,
-      optionKey: 'name',
-      optionValue: 'id'
-    }
+    ...metadata
   }))
   .add('initial value', () => ({
     ...metadata,
     props: {
-      label: 'Job',
-      group: new FormGroup({
-        job: new FormControl()
-      }),
-      controlName: 'job',
-      placeholder: 'Job',
-      data,
-      selectedValue: data[1],
-      optionKey: 'name',
-      optionValue: 'id'
+      ...metadata.props,
+      selectedValue: data[1]
     }
   }))
   .add('column display', () => ({
     ...metadata,
     props: {
-      label: 'Job',
-      group: new FormGroup({
-        job: new FormControl()
-      }),
-      controlName: 'job',
-      placeholder: 'Job',
+      ...metadata.props,
       displayInline: false,
-      data,
-      selectedValue: data[1],
-      optionKey: 'name',
-      optionValue: 'id'
+      selectedValue: data[1]
     }
   }));

@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
-import { addFormArray, isGroupControl, removeFormArrayAt } from '@app/shared/forms/helpers/form-helpers';
+
+import {
+  addFormArray,
+  isGroupControl,
+  removeFormArrayAt
+} from '@app/shared/forms/helpers/form-helpers';
 
 @Component({
   selector: 'app-array',

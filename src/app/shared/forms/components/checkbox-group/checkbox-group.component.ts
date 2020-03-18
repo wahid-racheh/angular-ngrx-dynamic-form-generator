@@ -18,6 +18,7 @@ import { isEmpty } from '@app/shared/forms/utils/form-utils';
       [controlName]="field.key"
       [disabled]="field?.templateOptions?.disabled"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [inputStyle]="field?.templateOptions?.inputStyle"
       [placeholder]="field?.templateOptions?.placeholder"
@@ -83,7 +84,9 @@ export class CheckboxGroupComponent extends BaseInput implements OnInit {
       this.preventInitialization = false;
       if (!this.controlArray.value.length) {
         this.data.forEach((item: any) => {
-          this.controlArray.push(getCheckboxStaticGroup(item[this.optionKey], item[this.optionValue], false));
+          this.controlArray.push(
+            getCheckboxStaticGroup(item[this.optionKey], item[this.optionValue], false)
+          );
         });
       }
       this.initSelectedValues();
@@ -93,7 +96,9 @@ export class CheckboxGroupComponent extends BaseInput implements OnInit {
   private initSelectedValues(): void {
     if (this.selectedValues && !!this.selectedValues.length) {
       this.controlArray.controls.forEach((control: AbstractControl) => {
-        const elem: any = this.selectedValues.find(item => item[this.optionValue] === control.value.value);
+        const elem: any = this.selectedValues.find(
+          item => item[this.optionValue] === control.value.value
+        );
         if (!isEmpty(elem)) {
           control.patchValue(
             {

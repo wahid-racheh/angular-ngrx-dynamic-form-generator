@@ -20,8 +20,14 @@ export class FormValidatorsService {
         value: `${validatorValue.requiredLength}`
       },
       exactLength: 'FORM_ERROR_MESSAGES.EXACT_LENGTH',
-      max: 'FORM_ERROR_MESSAGES.MAX',
-      min: 'FORM_ERROR_MESSAGES.MIN'
+      min: {
+        key: 'FORM_ERROR_MESSAGES.MIN',
+        value: `${validatorValue.min}`
+      },
+      max: {
+        key: 'FORM_ERROR_MESSAGES.MAX',
+        value: `${validatorValue.max}`
+      }
     };
     return config[validatorName];
   }

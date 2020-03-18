@@ -8,7 +8,11 @@ import { ProductFormValidatorsService } from '@app/demo/services/product-form-va
 import { ProductFormService } from '@app/demo/services/product-form.service';
 import { FormsFacade } from '@app/shared/forms/+store/forms.facade';
 import { NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
-import { addFormArray, getCheckboxStaticGroup, removeFormArrayAt } from '@app/shared/forms/helpers/form-helpers';
+import {
+  addFormArray,
+  getCheckboxStaticGroup,
+  removeFormArrayAt
+} from '@app/shared/forms/helpers/form-helpers';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -48,12 +52,12 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
       this.onCustomerSearch
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(term => this.handleSearchCustomer(term));
-  
+
       this.onSelectCustomer
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(customer => this.handleSelectCustomer(customer));
     }
-    
+
     this.userFacade.user$.pipe(takeUntil(this.unsubscribe$)).subscribe((customer: any) => {
       if (customer && this.customerDetailsGroup) {
         this.customerDetailsGroup.patchValue(
@@ -155,11 +159,11 @@ export class ProductFormContainerComponent implements OnInit, OnDestroy {
    * Getters
    */
   public get controls(): any {
-    return this.formConfig && this.formConfig.controlsMap || null;
+    return (this.formConfig && this.formConfig.controlsMap) || null;
   }
 
   public get productsArray(): FormArray {
-    return this.controls ? this.form.get(this.controls.products.key) as FormArray : null;
+    return this.controls ? (this.form.get(this.controls.products.key) as FormArray) : null;
   }
 
   public get customerDetailsGroup(): FormGroup {

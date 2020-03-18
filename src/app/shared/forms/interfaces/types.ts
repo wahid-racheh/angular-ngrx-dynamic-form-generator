@@ -33,6 +33,7 @@ export interface NgxTemplateOptions {
   displayOrder?: number;
   disabled?: boolean;
   label?: string;
+  description?: string;
   placeholder?: string;
   inputStyle?: any;
   cssClassName?: string;
@@ -54,6 +55,7 @@ export interface NgxAutoCompleteAsyncData {
 export interface NgxExtraOptions {
   // common properties
   data?: any;
+  attributes?: any;
 
   // Date picker properties
   defaultValue?: moment.Moment;
@@ -80,7 +82,9 @@ export interface NgxExtraOptions {
 
 export interface NgxBaseFormControl {
   key: string; // control name
+  level?: number; // controls tree level
   isDynamic?: boolean; // using dynamic render if true, by default false
+  className?: string; // control class name
   extraOptions?: NgxExtraOptions; // control extended options,
   validators?: any[]; // control validators
 
@@ -121,8 +125,8 @@ export interface NgxFormArray extends NgxBaseFormControl {
 }
 
 export type NgxAbstractFormControl =
-  NgxFormGroup |
-  NgxFormArray |
-  NgxFormControl |
-  NgxCustomFormComponent |
-  NgxCustomFormTemplate;
+  | NgxFormGroup
+  | NgxFormArray
+  | NgxFormControl
+  | NgxCustomFormComponent
+  | NgxCustomFormTemplate;

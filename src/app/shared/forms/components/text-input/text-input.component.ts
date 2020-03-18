@@ -13,6 +13,7 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
       [controlName]="field.key"
       [disabled]="field?.templateOptions?.disabled"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [placeholder]="field?.templateOptions?.placeholder"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [defaultValue]="field?.templateOptions?.defaultValue"
@@ -45,7 +46,6 @@ export class TextInputWrapperComponent {
   styleUrls: ['./text-input.component.scss']
 })
 export class TextInputComponent extends BaseInput implements OnInit {
-
   @Input()
   public defaultValue: string;
 

@@ -104,8 +104,9 @@ export const createArray = (control: NgxAbstractFormControl, array: FormArray): 
 
 // Return a FormControl
 export const createField = (control: NgxAbstractFormControl): FormControl => {
-  const defaultValue = control.templateOptions.hasOwnProperty('defaultValue') ?
-      control.templateOptions.defaultValue : null;
+  const defaultValue = control.templateOptions.hasOwnProperty('defaultValue')
+    ? control.templateOptions.defaultValue
+    : null;
   if (control.validators) {
     return new FormControl(defaultValue, control.validators);
   }
@@ -125,9 +126,12 @@ export const addFormArray = (formArray: FormArray, field: any): void => {
   if (field.childrens) {
     // Add index input to identify group index in the array
     const indexControl = new FormControl(formArray.value.length);
-    const group: FormGroup = createGroup(field.childrens, new FormGroup({
-      index: indexControl
-    }));
+    const group: FormGroup = createGroup(
+      field.childrens,
+      new FormGroup({
+        index: indexControl
+      })
+    );
     if (field.validators && !!field.validators.length) {
       group.setValidators(field.validators);
     }

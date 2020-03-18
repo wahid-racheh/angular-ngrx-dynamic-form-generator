@@ -16,6 +16,7 @@ import { isEmpty } from '@app/shared/forms/utils/form-utils';
       [controlName]="field.key"
       [disabled]="field?.templateOptions?.disabled"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [inputStyle]="field?.templateOptions?.inputStyle"
       [placeholder]="field?.templateOptions?.placeholder"
@@ -77,7 +78,7 @@ export class RadioGroupComponent extends BaseInput implements OnInit {
   }
 
   private handleChange(value: any): void {
-    if (!isEmpty(value)) {
+    if (!isEmpty(value) || typeof value === 'boolean') {
       const element: any = this.data.find(item => item[this.optionValue] === value);
       this.onChange.emit({
         ...element,

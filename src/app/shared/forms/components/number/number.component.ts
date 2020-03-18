@@ -13,13 +13,14 @@ import { NgxFormControl } from '@app/shared/forms/interfaces/types';
       [controlName]="field.key"
       [disabled]="field?.templateOptions?.disabled"
       [label]="field?.templateOptions?.label"
+      [description]="field?.templateOptions?.description"
       [placeholder]="field?.templateOptions?.placeholder"
       [cssClassName]="field?.templateOptions?.cssClassName"
       [inputStyle]="field?.templateOptions?.inputStyle"
       [attributes]="field?.templateOptions?.attributes"
-      (onBlur)="field?.templateOptions?.events?.onBlur.emit($event)"
-      (onChange)="field?.templateOptions?.events?.onChange.emit($event)"
-      (onFocus)="field?.templateOptions?.events?.onFocus.emit($event)"
+      (onBlur)="field?.templateOptions?.events?.onBlur?.emit($event)"
+      (onChange)="field?.templateOptions?.events?.onChange?.emit($event)"
+      (onFocus)="field?.templateOptions?.events?.onFocus?.emit($event)"
     ></app-number>
   `,
   styleUrls: ['./number.component.scss']

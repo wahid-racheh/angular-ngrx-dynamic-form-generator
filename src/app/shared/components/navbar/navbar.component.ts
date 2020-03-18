@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+
+import { RouterFacade } from '@app/core/services/router/+store/router.facade';
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +10,9 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   @Input() public title: string;
 
-  constructor(private router: Router) {}
+  constructor(private routerFacade: RouterFacade) {}
 
   public go(): void {
-    this.router.navigate(['/demo/forms'])
+    this.routerFacade.go({ path: ['/demo/forms'] });
   }
 }

@@ -16,6 +16,8 @@ export class BaseInput implements OnDestroy {
   @Input()
   public label: string;
   @Input()
+  public description: string;
+  @Input()
   public group: FormGroup;
   @Input()
   public controlName: string;

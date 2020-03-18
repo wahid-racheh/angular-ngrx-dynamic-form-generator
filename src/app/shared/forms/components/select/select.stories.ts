@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 
@@ -28,6 +29,7 @@ storiesOf('Shared|Forms/Components/SelectComponent', module)
       ],
       selectedValue: 'M',
       optionKey: 'text',
-      optionValue: 'id'
+      optionValue: 'id',
+      onChange: action('onChange event was triggered')
     }
   }));

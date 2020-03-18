@@ -4,7 +4,7 @@ import { withKnobs } from '@storybook/addon-knobs/angular';
 import { storiesOf } from '@storybook/angular';
 import { Observable, of } from 'rxjs';
 
-import { NgxFormConfig, INgxFormConfig } from '@app/shared/forms/classes/form-config.class';
+import { INgxFormConfig, NgxFormConfig } from '@app/shared/forms/classes/form-config.class';
 import { NgxFormControlType } from '@app/shared/forms/interfaces/types';
 
 import { AppMockModules } from '@tests/mocks/app-mock-modules';
@@ -58,6 +58,5 @@ storiesOf('Shared|Forms/Components/FormContentComponent', module)
       imports: [AppMockModules],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     },
-    component: MockFormContentComponent,
-    props: {}
+    component: MockFormContentComponent
   }));

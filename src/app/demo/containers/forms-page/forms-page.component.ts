@@ -36,8 +36,8 @@ export class FormsPageComponent implements OnInit, OnDestroy {
     // By calling user apis
     // Call search user using autocomplete search term
     this.asyncAutoCompleteWithApi.onSearch
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(term => this.handleSearchUser(term));
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(term => this.handleSearchUser(term));
 
     // Call get user api when selecting user from autocomplete list
     this.asyncAutoCompleteWithApi.onSelectItem
@@ -46,8 +46,8 @@ export class FormsPageComponent implements OnInit, OnDestroy {
 
     // Handle user data when receiving the response
     this.userFacade.user$
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((user: any) => this.setUserDetails(user));
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user: any) => this.setUserDetails(user));
   }
 
   public ngOnInit() {
@@ -83,7 +83,8 @@ export class FormsPageComponent implements OnInit, OnDestroy {
       this.form.get('basicFieldsGroup').patchValue(
         {
           inputText: user.username,
-          inputNumber: parseInt(user.address.zipcode, 4),
+          // tslint:disable-next-line:radix
+          inputNumber: parseInt(user.address.zipcode),
           textArea: `${user.address.street}, ${user.address.suite}, ${user.address.city}, ${user.address.zipcode}`
         },
         { emitEvent: false }
@@ -98,9 +99,7 @@ export class FormsPageComponent implements OnInit, OnDestroy {
   private get asyncAutoCompleteWithApi(): any {
     const {
       asyncAutoCompleteWithApi: {
-        templateOptions: {
-          events
-        }
+        templateOptions: { events }
       }
     } = this.formConfig.controlsMap;
     return events;
